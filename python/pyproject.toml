@@ -31,8 +31,8 @@ dev   = ["pytest", "pytest-asyncio", "python-dotenv"]
 
 [project.urls]
 Homepage   = "https://agentmem.dev"
-Repository = "https://github.com/rooney011/agentmem"
-Issues     = "https://github.com/rooney011/agentmem/issues"
+Repository = "https://github.com/rooney011/agentmem-sdk"
+Issues     = "https://github.com/rooney011/agentmem-sdk/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["agentmem"]

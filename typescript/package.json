@@ -7,10 +7,10 @@
   "homepage": "https://agentmem.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/devsforfun/agentmem-sdk.git",
+    "url": "https://github.com/rooney011/agentmem-sdk.git",
     "directory": "typescript"
   },
-  "bugs": { "url": "https://github.com/devsforfun/agentmem-sdk/issues" },
+  "bugs": { "url": "https://github.com/rooney011/agentmem-sdk/issues" },
   "keywords": ["ai", "agents", "memory", "llm", "rag", "vector", "sdk"],
   "type": "module",
   "main":   "./dist/index.cjs",
