@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentmem"
+version = "0.2.0"
+description = "Memory API for AI agents — Postgres-native, graph memory included, no Neo4j"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.8"
+authors = [{ name = "devsforfun", email = "bvsa2020@gmail.com" }]
+keywords = ["ai", "agents", "memory", "langchain", "crewai", "mem0", "vector", "postgres"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["httpx>=0.24.0"]
+
+[project.optional-dependencies]
+async = ["httpx[http2]>=0.24.0"]
+dev   = ["pytest", "pytest-asyncio", "python-dotenv"]
+
+[project.urls]
+Homepage   = "https://agentmem.dev"
+Repository = "https://github.com/rooney011/agentmem"
+Issues     = "https://github.com/rooney011/agentmem/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agentmem"]

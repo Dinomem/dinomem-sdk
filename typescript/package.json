@@ -1,0 +1,36 @@
+{
+  "name": "@agentmem/sdk",
+  "version": "0.6.0",
+  "description": "TypeScript SDK for AgentMem — the memory API for AI agents",
+  "license": "Apache-2.0",
+  "author": "devsforfun <bvsa2020@gmail.com>",
+  "homepage": "https://agentmem.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devsforfun/agentmem-sdk.git",
+    "directory": "typescript"
+  },
+  "bugs": { "url": "https://github.com/devsforfun/agentmem-sdk/issues" },
+  "keywords": ["ai", "agents", "memory", "llm", "rag", "vector", "sdk"],
+  "type": "module",
+  "main":   "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types":  "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types":   "./dist/index.d.ts",
+      "import":  "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build":     "tsup src/index.ts --format esm,cjs --dts --clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsup":       "8.3.5",
+    "typescript": "5.8.3"
+  },
+  "engines": { "node": ">=18" }
+}
