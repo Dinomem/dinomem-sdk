@@ -9,7 +9,7 @@ description = "Memory API for AI agents — Postgres-native, graph memory includ
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.8"
-authors = [{ name = "devsforfun", email = "bvsa2020@gmail.com" }]
+authors = [{ name = "rooney011", email = "bvsa2020@gmail.com" }]
 keywords = ["ai", "agents", "memory", "langchain", "crewai", "mem0", "vector", "postgres"]
 classifiers = [
   "Development Status :: 4 - Beta",
