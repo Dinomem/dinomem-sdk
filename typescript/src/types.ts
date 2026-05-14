@@ -35,6 +35,8 @@ export interface SearchParams {
   topK?:      number
   scope?:     Scope
   atTime?:    string
+  /** Re-rank the top candidates with Gemini for higher relevance. Adds ~500-1500ms latency. */
+  rerank?:    boolean
 }
 
 export interface MemoryHit {
@@ -46,6 +48,8 @@ export interface MemoryHit {
   workflow_id: string | null
   created_at:  string
   score:       number
+  /** Only present when `rerank: true` was passed to search. Range 0-1. */
+  relevance_score?: number
   vector_clock?: Record<string, number>
 }
 
