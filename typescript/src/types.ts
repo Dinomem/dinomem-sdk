@@ -128,6 +128,27 @@ export interface SetPolicyParams {
   webhookUrl?: string | null
 }
 
+export interface AccessGrant {
+  id:             string
+  grantor_role:   Role
+  grantee_agent:  string
+  resource_scope: Scope
+  valid_from:     string
+  valid_to:       string | null
+  created_at:     string
+}
+
+export interface CreateGrantParams {
+  /** Memories with this role become visible to the grantee. */
+  grantorRole:   Role
+  /** The agent_id that gets access. */
+  granteeAgent:  string
+  /** Which scope of memories to expose — usually 'private'. */
+  resourceScope: Scope
+  /** ISO 8601 timestamp; null/omitted = grant never expires. */
+  validTo?:      string
+}
+
 export interface Webhook {
   id:         string
   url:        string

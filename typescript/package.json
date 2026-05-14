@@ -1,6 +1,6 @@
 {
   "name": "@agentmem/sdk",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "TypeScript SDK for AgentMem — the memory API for AI agents",
   "license": "Apache-2.0",
   "author": "rooney011 <bvsa2020@gmail.com>",

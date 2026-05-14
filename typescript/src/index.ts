@@ -9,6 +9,7 @@ export type {
   Team,
   Policy, SetPolicyParams,
   Webhook, CreateWebhookParams, WebhookEvent,
+  AccessGrant, CreateGrantParams,
   Retention, WorkflowUsage,
   BatchWriteResult, BatchSearchResult,
   Scope, Role, ConflictPolicy,

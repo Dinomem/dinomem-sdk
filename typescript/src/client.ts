@@ -4,6 +4,7 @@ import type {
   ConflictResult, ScratchSetParams, ApiKey, CreateKeyParams, CreateKeyResult,
   Team, Policy, SetPolicyParams, Webhook, CreateWebhookParams, Retention,
   WorkflowUsage, BatchWriteResult, BatchSearchResult,
+  AccessGrant, CreateGrantParams,
 } from './types.ts'
 
 export const DEFAULT_BASE_URL = 'https://lwbwcuuzoituanwhekyo.supabase.co/functions/v1/api'
@@ -167,6 +168,21 @@ export class MemoryStore {
 
   async deleteWebhook(id: string): Promise<void> {
     return this.req('DELETE', `/v1/webhooks/${id}`)
+  }
+
+  // ── Access grants ─────────────────────────────────────────────────────────
+
+  async listGrants(): Promise<AccessGrant[]> {
+    const r = await this.req<{ grants: AccessGrant[] }>('GET', '/v1/grants')
+    return r.grants
+  }
+
+  async createGrant(params: CreateGrantParams): Promise<AccessGrant> {
+    return this.req('POST', '/v1/grants', params)
+  }
+
+  async revokeGrant(id: string): Promise<void> {
+    return this.req('DELETE', `/v1/grants/${id}`)
   }
 
   // ── Org settings ──────────────────────────────────────────────────────────
