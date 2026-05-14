@@ -9,7 +9,9 @@ export type ConflictPolicy = 'ignore' | 'planner_wins' | 'timestamp_wins' | 'hum
 export type WebhookEvent   =
   | 'memory.written'
   | 'memory.deleted'
+  | 'memory.expired'
   | 'memory.conflict_blocked'
+  | 'memory.conflict_detected'
   | 'memory.superseded'
 
 export interface WriteParams {
