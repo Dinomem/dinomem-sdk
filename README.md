@@ -5,7 +5,7 @@ Official client SDKs for [AgentMem](https://agentmem.dev) — the memory API for
 | Language | Package | Source |
 |---|---|---|
 | TypeScript / JavaScript | [`@agentmem/sdk`](https://www.npmjs.com/package/@agentmem/sdk) | [`./typescript`](./typescript) |
-| Python | [`agentmem`](https://pypi.org/project/agentmem/) | [`./python`](./python) |
+| Python | [`agentmem-py`](https://pypi.org/project/agentmem-py/) | [`./python`](./python) |
 
 Both SDKs are thin HTTP clients over the AgentMem REST API. They have no server-side dependencies and no proprietary code — the API itself is a separate (closed-source) project.
 
@@ -29,11 +29,11 @@ const hits = await mem.search({ query: 'theme preference', agentId: 'agent-1' })
 ### Python
 
 ```bash
-pip install agentmem
+pip install agentmem-py
 ```
 
 ```python
-from agentmem import MemoryStore
+from agentmem_py import MemoryStore
 
 mem = MemoryStore(api_key=os.environ["AGENTMEM_API_KEY"])
 

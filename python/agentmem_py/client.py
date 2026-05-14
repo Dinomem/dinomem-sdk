@@ -40,7 +40,7 @@ class MemoryStore:
 
     Usage::
 
-        from agentmem import MemoryStore
+        from agentmem_py import MemoryStore
 
         mem = MemoryStore(api_key="sk-...")
         result = mem.write("Alice prefers dark mode.", agent_id="support-bot")
@@ -211,7 +211,7 @@ class AsyncMemoryStore:
 
     Usage::
 
-        from agentmem import AsyncMemoryStore
+        from agentmem_py import AsyncMemoryStore
 
         async with AsyncMemoryStore(api_key="sk-...") as mem:
             await mem.write("Alice prefers dark mode.", agent_id="support-bot")

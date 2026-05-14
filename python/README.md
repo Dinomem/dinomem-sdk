@@ -1,18 +1,18 @@
-# agentmem
+# agentmem-py
 
 Python SDK for [AgentMem](https://agentmem.dev) — the memory API for AI agents.
 
 ## Install
 
 ```bash
-pip install agentmem
+pip install agentmem-py
 ```
 
 ## Usage
 
 ```python
 import os
-from agentmem import MemoryStore
+from agentmem_py import MemoryStore
 
 mem = MemoryStore(api_key=os.environ["AGENTMEM_API_KEY"])
 
@@ -26,7 +26,7 @@ for h in hits:
 
 ```python
 import asyncio
-from agentmem import AsyncMemoryStore
+from agentmem_py import AsyncMemoryStore
 
 async def main():
     async with AsyncMemoryStore(api_key="...") as mem:

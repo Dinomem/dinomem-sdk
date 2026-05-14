@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentmem"
+name = "agentmem-py"
 version = "0.2.0"
 description = "Memory API for AI agents — Postgres-native, graph memory included, no Neo4j"
 readme = "README.md"
@@ -35,4 +35,4 @@ Repository = "https://github.com/rooney011/agentmem-sdk"
 Issues     = "https://github.com/rooney011/agentmem-sdk/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["agentmem"]
+packages = ["agentmem_py"]
