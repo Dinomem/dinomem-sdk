@@ -2,7 +2,7 @@ export { MemoryStore, AgentMemError, DEFAULT_BASE_URL } from './client.ts'
 export type {
   ClientOptions,
   WriteParams, WriteResult,
-  SearchParams, MemoryHit, Memory,
+  SearchParams, MemoryHit, Memory, MemoryHistory,
   ConflictResult, Conflict,
   ScratchSetParams,
   ApiKey, CreateKeyParams, CreateKeyResult,

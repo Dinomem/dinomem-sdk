@@ -1,6 +1,6 @@
 import type {
   ClientOptions,
-  WriteParams, WriteResult, SearchParams, MemoryHit, Memory,
+  WriteParams, WriteResult, SearchParams, MemoryHit, Memory, MemoryHistory,
   ConflictResult, ScratchSetParams, ApiKey, CreateKeyParams, CreateKeyResult,
   Team, Policy, SetPolicyParams, Webhook, CreateWebhookParams, Retention,
   WorkflowUsage, BatchWriteResult, BatchSearchResult,
@@ -53,6 +53,10 @@ export class MemoryStore {
 
   async get(id: string): Promise<Memory> {
     return this.req('GET', `/v1/memory/${id}`)
+  }
+
+  async getHistory(id: string): Promise<MemoryHistory> {
+    return this.req('GET', `/v1/memory/${id}/history`)
   }
 
   async delete(id: string): Promise<void> {

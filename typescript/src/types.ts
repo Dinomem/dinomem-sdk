@@ -51,6 +51,8 @@ export interface MemoryHit {
   /** Only present when `rerank: true` was passed to search. Range 0-1. */
   relevance_score?: number
   vector_clock?: Record<string, number>
+  /** UUID of the memory that superseded this one, if any. */
+  superseded_by?: string | null
 }
 
 export interface Memory {
@@ -65,6 +67,18 @@ export interface Memory {
   extracted:   boolean
   encrypted:   boolean
   vector_clock?: Record<string, number>
+  /** UUID of the memory that superseded this one, if any. */
+  superseded_by?: string | null
+  /** Set when the memory has been soft-deleted (expired, superseded, or revoked). */
+  deleted_at?:   string | null
+}
+
+export interface MemoryHistory {
+  memory:        Memory
+  /** The memory that replaced this one (one level forward), or null. */
+  supersededBy:  Memory | null
+  /** Memories this one replaced (one level back). */
+  supersedes:    Memory[]
 }
 
 export interface Conflict {
