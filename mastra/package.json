@@ -1,0 +1,64 @@
+{
+  "name": "@agentmem/mastra",
+  "version": "0.1.0",
+  "description": "AgentMem integration for Mastra — memory tools for any Mastra agent",
+  "license": "Apache-2.0",
+  "author": "rooney011 <bvsa2020@gmail.com>",
+  "homepage": "https://agentmem.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "directory": "mastra"
+  },
+  "bugs": {
+    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+  },
+  "keywords": [
+    "mastra",
+    "ai",
+    "agents",
+    "memory",
+    "rag",
+    "integration"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --import=tsx test/*.test.ts"
+  },
+  "dependencies": {
+    "@agentmem/sdk": "^0.7.0"
+  },
+  "peerDependencies": {
+    "@mastra/core": ">=0.15.3 <0.18.0",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@mastra/core": "^0.16.0",
+    "@types/node": "^20.0.0",
+    "tsup": "8.3.5",
+    "tsx": "^4.0.0",
+    "typescript": "5.8.3",
+    "zod": "^3.23.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
