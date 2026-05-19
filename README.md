@@ -116,6 +116,10 @@ agent = Agent(
 
 Drop-in replacements for CrewAI's built-in `RecallMemoryTool` / `RememberTool`, backed by AgentMem instead of LanceDB. See [`./crewai`](./crewai).
 
+## Benchmark
+
+Methodology and reproducible harness for comparing AgentMem against Mem0, Zep, Cognee, Supermemory, LangMem, and a pgvector baseline on **multi-agent** memory scenarios (contradictions, CRDT convergence, scope enforcement, temporal queries) lives in a separate repo: [`agentmem-bench`](https://github.com/rooney011/agentmem-bench). Design phase — implementation in progress.
+
 ## Quick start
 
 ### TypeScript
