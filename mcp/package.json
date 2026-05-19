@@ -1,0 +1,51 @@
+{
+  "name": "@agentmem/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for AgentMem — drop-in memory tools for Claude, Cursor, and any MCP-compatible agent",
+  "license": "Apache-2.0",
+  "author": "rooney011 <bvsa2020@gmail.com>",
+  "homepage": "https://agentmem.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "directory": "mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "agents",
+    "memory",
+    "claude",
+    "anthropic"
+  ],
+  "type": "module",
+  "bin": {
+    "agentmem-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agentmem/sdk": "^0.7.0",
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "8.3.5",
+    "typescript": "5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
