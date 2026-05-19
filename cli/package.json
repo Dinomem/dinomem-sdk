@@ -1,0 +1,50 @@
+{
+  "name": "@agentmem/cli",
+  "version": "0.1.0",
+  "description": "One-command setup for AgentMem — the memory API for AI agents",
+  "license": "Apache-2.0",
+  "author": "rooney011 <bvsa2020@gmail.com>",
+  "homepage": "https://agentmem.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "memory",
+    "cli",
+    "init",
+    "scaffold"
+  ],
+  "type": "module",
+  "bin": {
+    "agentmem": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "8.3.5",
+    "typescript": "5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
