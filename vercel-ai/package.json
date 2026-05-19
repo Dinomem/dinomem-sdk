@@ -1,0 +1,66 @@
+{
+  "name": "@agentmem/vercel-ai-provider",
+  "version": "0.1.0",
+  "description": "AgentMem integration for the Vercel AI SDK — middleware, tools, and helpers for any model",
+  "license": "Apache-2.0",
+  "author": "rooney011 <bvsa2020@gmail.com>",
+  "homepage": "https://agentmem.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "directory": "vercel-ai"
+  },
+  "bugs": {
+    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+  },
+  "keywords": [
+    "vercel",
+    "ai-sdk",
+    "ai",
+    "agents",
+    "memory",
+    "middleware",
+    "provider"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --import=tsx test/*.test.ts"
+  },
+  "dependencies": {
+    "@agentmem/sdk": "^0.7.0"
+  },
+  "peerDependencies": {
+    "ai": "^6.0.0",
+    "zod": "^3.25.76 || ^4.0.0"
+  },
+  "devDependencies": {
+    "ai": "^6.0.185",
+    "@ai-sdk/provider": "^3.0.10",
+    "@types/node": "^20.0.0",
+    "tsup": "8.3.5",
+    "tsx": "^4.0.0",
+    "typescript": "5.8.3",
+    "zod": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
