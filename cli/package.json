@@ -1,6 +1,6 @@
 {
   "name": "@agentmem/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "One-command setup for AgentMem — the memory API for AI agents",
   "license": "Apache-2.0",
   "author": "rooney011 <bvsa2020@gmail.com>",

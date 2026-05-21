@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agentmem-crewai"
-version = "0.1.0"
+version = "0.1.1"
 description = "AgentMem integration for CrewAI — drop-in memory tools for any Crew agent"
 readme = "README.md"
 license = { text = "Apache-2.0" }
