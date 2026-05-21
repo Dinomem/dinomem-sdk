@@ -1,6 +1,6 @@
 # @agentmem/mastra
 
-[Mastra](https://mastra.ai) integration for [AgentMem](https://agentmem.dev) — drop-in memory tools for Mastra agents.
+[Mastra](https://mastra.ai) integration for [AgentMem](https://agentmem-dashboard.vercel.app) — drop-in memory tools for Mastra agents.
 
 ```bash
 npm install @agentmem/mastra @mastra/core zod

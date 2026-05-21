@@ -30,7 +30,7 @@ async = ["httpx[http2]>=0.24.0"]
 dev   = ["pytest", "pytest-asyncio", "python-dotenv"]
 
 [project.urls]
-Homepage   = "https://agentmem.dev"
+Homepage   = "https://agentmem-dashboard.vercel.app"
 Repository = "https://github.com/rooney011/agentmem-sdk"
 Issues     = "https://github.com/rooney011/agentmem-sdk/issues"
 

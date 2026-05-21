@@ -1,6 +1,6 @@
 # @agentmem/claude-agent
 
-[AgentMem](https://agentmem.dev) integration for the [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-typescript). Drops in two ways:
+[AgentMem](https://agentmem-dashboard.vercel.app) integration for the [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-typescript). Drops in two ways:
 
 1. **In-process MCP server** — gives the agent 8 memory tools (`memory_write`, `memory_search`, etc.) without spawning a separate process.
 2. **`UserPromptSubmit` hook** — auto-recalls relevant memories on every user turn so the agent has context *without ever calling a tool*.

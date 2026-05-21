@@ -1,6 +1,6 @@
 # agentmem-crewai
 
-[CrewAI](https://crewai.com) integration for [AgentMem](https://agentmem.dev). Ships two pre-built tools that match the shape of CrewAI's built-in `RecallMemoryTool` / `RememberTool` — agents get hybrid retrieval (semantic + keyword + graph), multi-agent scoping, and Postgres-native storage with one config object.
+[CrewAI](https://crewai.com) integration for [AgentMem](https://agentmem-dashboard.vercel.app). Ships two pre-built tools that match the shape of CrewAI's built-in `RecallMemoryTool` / `RememberTool` — agents get hybrid retrieval (semantic + keyword + graph), multi-agent scoping, and Postgres-native storage with one config object.
 
 ```bash
 pip install agentmem-crewai

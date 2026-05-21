@@ -11,7 +11,7 @@ function readKey(): string {
   if (!key) {
     process.stderr.write(
       '[agentmem-mcp] AGENTMEM_API_KEY is not set.\n' +
-      '  Get a key at https://agentmem.dev and set it in your MCP client config, e.g.\n' +
+      '  Get a key at https://agentmem-dashboard.vercel.app and set it in your MCP client config, e.g.\n' +
       '    "env": { "AGENTMEM_API_KEY": "sk-..." }\n'
     )
     process.exit(1)

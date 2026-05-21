@@ -1,6 +1,6 @@
 # @agentmem/mcp
 
-MCP (Model Context Protocol) server for [AgentMem](https://agentmem.dev). Adds shared memory to any MCP-compatible agent — Claude Desktop, Claude Code, Cursor, Continue, and others.
+MCP (Model Context Protocol) server for [AgentMem](https://agentmem-dashboard.vercel.app). Adds shared memory to any MCP-compatible agent — Claude Desktop, Claude Code, Cursor, Continue, and others.
 
 ## Install (one block)
 
@@ -20,7 +20,7 @@ Add to your MCP client config (`claude_desktop_config.json` or the equivalent):
 }
 ```
 
-Get a key at [agentmem.dev](https://agentmem.dev). Restart your client.
+Get a key at [agentmem-dashboard.vercel.app](https://agentmem-dashboard.vercel.app). Restart your client.
 
 ### Cursor
 

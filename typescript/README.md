@@ -1,6 +1,6 @@
 # @agentmem/sdk
 
-TypeScript SDK for [AgentMem](https://agentmem.dev) — the memory API for AI agents.
+TypeScript SDK for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
 
 ## Install
 

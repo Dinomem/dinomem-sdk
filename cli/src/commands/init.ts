@@ -83,7 +83,7 @@ export async function init(opts: InitOptions): Promise<number> {
 
   p.note(
     [
-      `${pc.bold('1.')} Get an API key:  ${pc.cyan('https://agentmem.dev')}`,
+      `${pc.bold('1.')} Get an API key:  ${pc.cyan('https://agentmem-dashboard.vercel.app')}`,
       `${pc.bold('2.')} Paste it into:   ${pc.bold(envFile)}`,
       `${pc.bold('3.')} Run the demo:    ${pc.bold(lang === 'ts' ? 'npx tsx ' + ex.file : 'python ' + ex.file)}`,
     ].join('\n'),

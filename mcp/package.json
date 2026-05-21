@@ -4,7 +4,7 @@
   "description": "MCP server for AgentMem — drop-in memory tools for Claude, Cursor, and any MCP-compatible agent",
   "license": "Apache-2.0",
   "author": "rooney011 <bvsa2020@gmail.com>",
-  "homepage": "https://agentmem.dev",
+  "homepage": "https://agentmem-dashboard.vercel.app",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rooney011/agentmem-sdk.git",

@@ -6,7 +6,7 @@ import { z } from 'zod'
 // ── Types ────────────────────────────────────────────────────────────────────
 
 export interface AgentMemConfig {
-  /** AgentMem API key. Get one at https://agentmem.dev */
+  /** AgentMem API key. Get one at https://agentmem-dashboard.vercel.app */
   apiKey:      string
   /** Override the API base URL (self-hosters). */
   baseUrl?:    string

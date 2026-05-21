@@ -1,6 +1,6 @@
 # @agentmem/cli
 
-One-command setup for [AgentMem](https://agentmem.dev) — the memory API for AI agents.
+One-command setup for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
 
 ## Usage
 
@@ -18,7 +18,7 @@ The CLI will:
 4. Append that file to `.gitignore` if it isn't already.
 5. Drop an `agentmem-example.{ts,py}` script that does a write + search round-trip.
 
-Then paste your key from [agentmem.dev](https://agentmem.dev) into the env file and run the example.
+Then paste your key from [the dashboard](https://agentmem-dashboard.vercel.app) into the env file and run the example.
 
 ## Flags
 

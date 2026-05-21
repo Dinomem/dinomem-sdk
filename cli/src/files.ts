@@ -11,7 +11,7 @@ export function writeEnv(cwd: string, lang: Lang): { file: string; changed: bool
   const line = `${ENV_KEY}=`
 
   if (!existsSync(path)) {
-    writeFileSync(path, `# AgentMem — get a key at https://agentmem.dev\n${line}\n`, 'utf8')
+    writeFileSync(path, `# AgentMem — get a key at https://agentmem-dashboard.vercel.app\n${line}\n`, 'utf8')
     return { file, changed: true }
   }
   const current = readFileSync(path, 'utf8')

@@ -1,6 +1,6 @@
 # AgentMem SDK
 
-Official client SDKs for [AgentMem](https://agentmem.dev) — the memory API for AI agents.
+Official client SDKs for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
 
 | Language | Package | Source |
 |---|---|---|

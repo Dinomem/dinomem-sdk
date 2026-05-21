@@ -1,6 +1,6 @@
 # @agentmem/vercel-ai-provider
 
-[Vercel AI SDK](https://ai-sdk.dev) integration for [AgentMem](https://agentmem.dev). Three ways to wire it in — use one or stack them.
+[Vercel AI SDK](https://ai-sdk.dev) integration for [AgentMem](https://agentmem-dashboard.vercel.app). Three ways to wire it in — use one or stack them.
 
 ```bash
 npm install @agentmem/vercel-ai-provider ai
