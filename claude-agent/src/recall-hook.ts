@@ -66,7 +66,12 @@ export function agentmemRecallHook(config: RecallHookConfig): HookCallback {
       return {}
     }
 
-    const filtered = hits.filter(h => (h.relevance_score ?? h.score ?? 0) >= minScore)
+    const filtered = hits.filter(h => {
+      // relevance_score=null means rerank was requested but failed. Drop the
+      // hit rather than fall back to the raw `score` (different semantics).
+      if (h.relevance_score === null) return false
+      return (h.relevance_score ?? h.score ?? 0) >= minScore
+    })
     if (filtered.length === 0) return {}
 
     const body = filtered.map(h => `- ${h.content}`).join('\n')

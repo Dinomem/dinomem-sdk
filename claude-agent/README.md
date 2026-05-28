@@ -76,7 +76,7 @@ Config:
 | `scope` | all | Limit to private/team/global. |
 | `topK` | 5 | Number of hits per turn. |
 | `rerank` | false | Re-score with Gemini (+0.5-1.5s). |
-| `minScore` | 0 | Minimum score (or `relevance_score` when reranking) to inject. |
+| `minScore` | 0 | Minimum score to inject. With `rerank: true`, compared against `relevance_score` (0–1). Hits where `relevance_score` is `null` (rerank failed, e.g. Gemini rate-limit) are always dropped, never compared against the raw `score`. |
 | `prefix` | default preamble | Custom text before the memory list. |
 
 ## Choosing between tools and the hook

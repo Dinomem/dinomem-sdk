@@ -11,4 +11,5 @@ export {
 export type { AgentMemConfig, MessageLike, MemoryHit, Scope, Role } from './helpers.ts'
 
 export { createAgentMemMiddleware } from './middleware.ts'
+export type { LanguageModel } from './middleware.ts'
 export { agentmemMemorize, agentmemRecall } from './tools.ts'

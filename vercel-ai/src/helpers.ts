@@ -141,8 +141,13 @@ export async function searchMemories(
   }
 
   const minScore = config.minScore ?? 0
-  if (minScore === 0) return hits
-  return hits.filter(h => (h.relevance_score ?? h.score ?? 0) >= minScore)
+  return hits.filter(h => {
+    // relevance_score=null means rerank was requested but failed. Drop the hit
+    // unconditionally — falling back to the raw `score` mixes incompatible
+    // signals and was the rerank silent-degrade bug. Mirrors @agentmem/claude-agent.
+    if (h.relevance_score === null) return false
+    return (h.relevance_score ?? h.score ?? 0) >= minScore
+  })
 }
 
 // Re-export the SDK error for instanceof checks.

@@ -8,6 +8,31 @@ import {
 } from './helpers.ts'
 
 /**
+ * The model-object type accepted by `ai`'s `wrapLanguageModel`.
+ *
+ * `ai` exports a `LanguageModel` alias too, but it's a *union* —
+ * `string | LanguageModelV3 | LanguageModelV2` — designed for high-level
+ * helpers like `generateText` that accept a model id directly. Passing that
+ * union type to `wrapLanguageModel` is a type error because `wrapLanguageModel`
+ * requires the object form only.
+ *
+ * Import THIS `LanguageModel` instead when you need a typed variable that
+ * round-trips through `wrapLanguageModel`:
+ *
+ * @example
+ *   import { wrapLanguageModel } from 'ai'
+ *   import { openai } from '@ai-sdk/openai'
+ *   import { createAgentMemMiddleware, type LanguageModel } from '@agentmem/vercel-ai-provider'
+ *
+ *   const baseModel: LanguageModel = openai('gpt-4o-mini')
+ *   const wrapped = wrapLanguageModel({
+ *     model:      baseModel,
+ *     middleware: createAgentMemMiddleware({ apiKey, agentId: 'bot' }),
+ *   })
+ */
+export type LanguageModel = Parameters<typeof import('ai').wrapLanguageModel>[0]['model']
+
+/**
  * Build a Vercel AI SDK middleware that, on every model call, searches AgentMem
  * with the user's latest message and prepends matching memories to the system
  * prompt.

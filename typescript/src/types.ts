@@ -47,9 +47,27 @@ export interface MemoryHit {
   role:        string | null
   workflow_id: string | null
   created_at:  string
+  /**
+   * Reciprocal Rank Fusion (RRF) score from the hybrid search (semantic +
+   * keyword + graph channels). This is an **ordering signal**, not a relevance
+   * signal — typical range is ~0–0.04 (a top-of-channels hit caps around 0.04
+   * because of the RRF formula `1 / (k + rank + 1)` with k=60).
+   *
+   * Higher means the memory ranked well across more channels, but a 0.03 score
+   * for a near-exact match is normal, not a sign of low quality. Use this
+   * field for sorting and for hybrid-mode `minScore` filtering. For a true
+   * 0–1 relevance signal, pass `rerank: true` and read `relevance_score`.
+   */
   score:       number
-  /** Only present when `rerank: true` was passed to search. Range 0-1. */
-  relevance_score?: number
+  /**
+   * Three states:
+   * - `number` (0–1): rerank ran and produced a relevance score.
+   * - `null`: rerank was requested but failed (e.g. Gemini rate-limit). Do NOT
+   *   substitute the raw `score` — the field is null precisely because the
+   *   relevance signal is unavailable.
+   * - `undefined`: rerank was not requested.
+   */
+  relevance_score?: number | null
   vector_clock?: Record<string, number>
   /** UUID of the memory that superseded this one, if any. */
   superseded_by?: string | null

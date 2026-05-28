@@ -8,21 +8,39 @@ npm install @agentmem/vercel-ai-provider ai
 
 ## Pattern A — middleware (automatic memory injection)
 
-Wrap any `@ai-sdk/*` model and memories appear in the system prompt on every call.
+Wrap any `@ai-sdk/*` model and memories appear in the system prompt on every call. Works the same for `generateText`, `streamText`, and `generateObject` — they all route through the model's `doGenerate` / `doStream` hook, which is where the middleware fires.
 
 ```ts
 import { generateText, wrapLanguageModel } from 'ai'
 import { anthropic } from '@ai-sdk/anthropic'
-import { createAgentMemMiddleware } from '@agentmem/vercel-ai-provider'
+import { createAgentMemMiddleware, type LanguageModel } from '@agentmem/vercel-ai-provider'
 
 const cfg = { apiKey: process.env.AGENTMEM_API_KEY!, agentId: 'support-bot' }
 
+const baseModel: LanguageModel = anthropic('claude-opus-4-7')
 const model = wrapLanguageModel({
-  model:      anthropic('claude-opus-4-7'),
+  model:      baseModel,
   middleware: createAgentMemMiddleware(cfg),
 })
 
 const { text } = await generateText({ model, prompt: 'What did the customer prefer?' })
+```
+
+> **Note on `LanguageModel`.** Import the type from this package, not from `ai`. The `ai` SDK's `LanguageModel` alias is a *union* (`string | LanguageModelV3 | LanguageModelV2`) for high-level helpers that accept a model id; that union doesn't satisfy `wrapLanguageModel`, which needs the object form only. This package re-exports the right shape.
+
+### Structured output (`generateObject`) works the same way
+
+Wrap the model exactly as above and use `generateObject` directly — the middleware injects memory into the prompt before the model sees it, and the structured schema is preserved.
+
+```ts
+import { generateObject } from 'ai'
+import { z } from 'zod'
+
+const { object } = await generateObject({
+  model,
+  schema: z.object({ verdict: z.enum(['approve', 'reject']), reasoning: z.string() }),
+  prompt: 'Should we approve this purchase request?',
+})
 ```
 
 If search fails, the middleware logs to stderr and lets the call proceed without memory — your model never gets blocked.
