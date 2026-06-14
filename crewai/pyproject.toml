@@ -3,14 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentmem-crewai"
+name = "dinomem-crewai"
 version = "0.1.1"
-description = "AgentMem integration for CrewAI — drop-in memory tools for any Crew agent"
+description = "DinoMem integration for CrewAI — drop-in memory tools for any Crew agent"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10,<3.14"
-authors = [{ name = "rooney011", email = "bvsa2020@gmail.com" }]
-keywords = ["crewai", "ai", "agents", "memory", "agentmem", "tools"]
+authors = [{ name = "DinoMem" }]
+keywords = ["crewai", "ai", "agents", "memory", "dinomem", "tools"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
@@ -23,7 +23,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-  "agentmem-py>=0.2.0",
+  "dinomem-py>=0.2.0",
   "crewai>=1.10.0,<2.0",
   "pydantic>=2.0",
 ]
@@ -32,16 +32,16 @@ dependencies = [
 dev = ["pytest>=7.0", "pytest-asyncio"]
 
 [project.urls]
-Homepage   = "https://agentmem-dashboard.vercel.app"
-Repository = "https://github.com/rooney011/agentmem-sdk"
-Issues     = "https://github.com/rooney011/agentmem-sdk/issues"
+Homepage   = "https://dinomem-dashboard.vercel.app"
+Repository = "https://github.com/DinoMem/dinomem-sdk"
+Issues     = "https://github.com/DinoMem/dinomem-sdk/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["agentmem_crewai"]
+packages = ["dinomem_crewai"]
 
 [tool.hatch.build.targets.sdist]
 include = [
-  "/agentmem_crewai",
+  "/dinomem_crewai",
   "/tests",
   "/README.md",
   "/pyproject.toml",

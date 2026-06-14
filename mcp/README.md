@@ -1,6 +1,6 @@
-# @agentmem/mcp
+# @dinomem/mcp
 
-MCP (Model Context Protocol) server for [AgentMem](https://agentmem-dashboard.vercel.app). Adds shared memory to any MCP-compatible agent — Claude Desktop, Claude Code, Cursor, Continue, and others.
+MCP (Model Context Protocol) server for [DinoMem](https://dinomem-dashboard.vercel.app). Adds shared memory to any MCP-compatible agent — Claude Desktop, Claude Code, Cursor, Continue, and others.
 
 ## Install (one block)
 
@@ -11,16 +11,16 @@ Add to your MCP client config (`claude_desktop_config.json` or the equivalent):
 ```json
 {
   "mcpServers": {
-    "agentmem": {
+    "dinomem": {
       "command": "npx",
-      "args":    ["-y", "@agentmem/mcp"],
-      "env":     { "AGENTMEM_API_KEY": "sk-..." }
+      "args":    ["-y", "@dinomem/mcp"],
+      "env":     { "DINOMEM_API_KEY": "sk-..." }
     }
   }
 }
 ```
 
-Get a key at [agentmem-dashboard.vercel.app](https://agentmem-dashboard.vercel.app). Restart your client.
+Get a key at [dinomem-dashboard.vercel.app](https://dinomem-dashboard.vercel.app). Restart your client.
 
 ### Cursor
 
@@ -43,12 +43,12 @@ Same shape as above, under `.cursor/mcp.json` or your global MCP config.
 
 | Name | Required? | Default |
 |---|---|---|
-| `AGENTMEM_API_KEY` | yes | — |
-| `AGENTMEM_BASE_URL` | no | AgentMem's hosted API |
+| `DINOMEM_API_KEY` | yes | — |
+| `DINOMEM_BASE_URL` | no | DinoMem's hosted API |
 
 ## Self-hosting
 
-Point `AGENTMEM_BASE_URL` at your own AgentMem instance. The server is a thin wrapper around [`@agentmem/sdk`](../typescript) — anything the SDK supports, this exposes.
+Point `DINOMEM_BASE_URL` at your own DinoMem instance. The server is a thin wrapper around [`@dinomem/sdk`](../typescript) — anything the SDK supports, this exposes.
 
 ## License
 

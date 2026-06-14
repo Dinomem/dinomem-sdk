@@ -1,4 +1,4 @@
-"""AgentMem Python SDK — synchronous and async clients."""
+"""DinoMem Python SDK — synchronous and async clients."""
 
 from __future__ import annotations
 
@@ -36,11 +36,11 @@ class Conflict:
 # ── Sync client ───────────────────────────────────────────────────────────────
 
 class MemoryStore:
-    """Synchronous AgentMem client.
+    """Synchronous DinoMem client.
 
     Usage::
 
-        from agentmem_py import MemoryStore
+        from dinomem_py import MemoryStore
 
         mem = MemoryStore(api_key="sk-...")
         result = mem.write("Alice prefers dark mode.", agent_id="support-bot")
@@ -207,11 +207,11 @@ class MemoryStore:
 # ── Async client ──────────────────────────────────────────────────────────────
 
 class AsyncMemoryStore:
-    """Async AgentMem client (requires httpx).
+    """Async DinoMem client (requires httpx).
 
     Usage::
 
-        from agentmem_py import AsyncMemoryStore
+        from dinomem_py import AsyncMemoryStore
 
         async with AsyncMemoryStore(api_key="sk-...") as mem:
             await mem.write("Alice prefers dark mode.", agent_id="support-bot")

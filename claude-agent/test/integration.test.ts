@@ -1,9 +1,9 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { MemoryStore, type MemoryHit } from '@agentmem/sdk'
+import { MemoryStore, type MemoryHit } from '@dinomem/sdk'
 import {
-  agentmemMcpServer,
-  agentmemRecallHook,
+  dinomemMcpServer,
+  dinomemRecallHook,
   buildTools,
 } from '../src/index.ts'
 
@@ -47,22 +47,22 @@ test('buildTools yields the 8 expected tools', () => {
 
 // ── MCP server factory ──────────────────────────────────────────────────────
 
-test('agentmemMcpServer returns an McpSdkServerConfigWithInstance', () => {
-  const server = agentmemMcpServer({ apiKey: 'sk-fake' })
+test('dinomemMcpServer returns an McpSdkServerConfigWithInstance', () => {
+  const server = dinomemMcpServer({ apiKey: 'sk-fake' })
   assert.ok(server.instance, 'has instance')
   assert.equal((server as any).type, 'sdk')
-  assert.equal((server as any).name, 'agentmem')
+  assert.equal((server as any).name, 'dinomem')
 })
 
-test('agentmemMcpServer accepts name/version overrides', () => {
-  const server = agentmemMcpServer({ apiKey: 'sk-fake', name: 'custom', version: '9.9.9' })
+test('dinomemMcpServer accepts name/version overrides', () => {
+  const server = dinomemMcpServer({ apiKey: 'sk-fake', name: 'custom', version: '9.9.9' })
   assert.equal((server as any).name, 'custom')
 })
 
 // ── recall hook ─────────────────────────────────────────────────────────────
 
-test('agentmemRecallHook ignores non-matching hook events', async () => {
-  const hook = agentmemRecallHook({ apiKey: 'sk-fake', agentId: 'a' })
+test('dinomemRecallHook ignores non-matching hook events', async () => {
+  const hook = dinomemRecallHook({ apiKey: 'sk-fake', agentId: 'a' })
   const out = await hook(
     { hook_event_name: 'PostToolUse' } as any,
     undefined,
@@ -71,8 +71,8 @@ test('agentmemRecallHook ignores non-matching hook events', async () => {
   assert.deepEqual(out, {})
 })
 
-test('agentmemRecallHook swallows search errors gracefully', async () => {
-  const hook = agentmemRecallHook({
+test('dinomemRecallHook swallows search errors gracefully', async () => {
+  const hook = dinomemRecallHook({
     apiKey:  'sk-fake',
     baseUrl: 'http://127.0.0.1:9',       // unreachable
     agentId: 'a',
@@ -94,10 +94,10 @@ test('agentmemRecallHook swallows search errors gracefully', async () => {
   }
 
   assert.deepEqual(out, {}, 'returns empty object so turn proceeds')
-  assert.ok(writes.some(s => s.includes('[agentmem-recall]')), 'logged to stderr')
+  assert.ok(writes.some(s => s.includes('[dinomem-recall]')), 'logged to stderr')
 })
 
-test('agentmemRecallHook drops hits with relevance_score: null (rerank failed)', async () => {
+test('dinomemRecallHook drops hits with relevance_score: null (rerank failed)', async () => {
   // Regression for the rerank silent-degrade fix: when Gemini rate-limits, the
   // backend returns relevance_score=null instead of falling back to the raw
   // hybrid score. The hook MUST drop those hits, not inject them — falling back
@@ -108,7 +108,7 @@ test('agentmemRecallHook drops hits with relevance_score: null (rerank failed)',
     makeHit({ id: '2', content: 'dropped-memory', relevance_score: null }),
   ]
   try {
-    const hook = agentmemRecallHook({ apiKey: 'sk-fake', agentId: 'a', rerank: true })
+    const hook = dinomemRecallHook({ apiKey: 'sk-fake', agentId: 'a', rerank: true })
     const out: any = await hook(
       { hook_event_name: 'UserPromptSubmit', prompt: 'q' } as any,
       undefined,
@@ -123,7 +123,7 @@ test('agentmemRecallHook drops hits with relevance_score: null (rerank failed)',
   }
 })
 
-test('agentmemRecallHook returns {} when every hit has relevance_score: null', async () => {
+test('dinomemRecallHook returns {} when every hit has relevance_score: null', async () => {
   // Edge of the same regression: if ALL hits failed rerank, the hook should
   // bail out (return {}) rather than inject an empty memory block with just a
   // preamble.
@@ -133,7 +133,7 @@ test('agentmemRecallHook returns {} when every hit has relevance_score: null', a
     makeHit({ id: '2', relevance_score: null }),
   ]
   try {
-    const hook = agentmemRecallHook({ apiKey: 'sk-fake', agentId: 'a', rerank: true })
+    const hook = dinomemRecallHook({ apiKey: 'sk-fake', agentId: 'a', rerank: true })
     const out = await hook(
       { hook_event_name: 'UserPromptSubmit', prompt: 'q' } as any,
       undefined,

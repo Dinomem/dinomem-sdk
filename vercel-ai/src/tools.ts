@@ -1,9 +1,9 @@
 import { tool } from 'ai'
 import { z } from 'zod'
 import {
-  type AgentMemConfig,
+  type DinoMemConfig,
   MemoryStore,
-  AgentMemError,
+  DinoMemError,
   searchMemories,
 } from './helpers.ts'
 
@@ -13,22 +13,22 @@ const role  = z.enum(['planner', 'executor', 'observer'])
 function requireAgentId(c: { agentId?: string }, fallback?: string): string {
   const id = c.agentId ?? fallback
   if (!id) {
-    throw new Error('[@agentmem/vercel-ai-provider] agentId is required (config or tool input).')
+    throw new Error('[@dinomem/vercel-ai-provider] agentId is required (config or tool input).')
   }
   return id
 }
 
 /**
- * Vercel AI SDK tool for storing a fact in AgentMem.
+ * Vercel AI SDK tool for storing a fact in DinoMem.
  *
  * @example
  *   await generateText({
  *     model:  anthropic('claude-opus-4-7'),
- *     tools:  { memorize: agentmemMemorize({ apiKey, agentId: 'bot' }) },
+ *     tools:  { memorize: dinomemMemorize({ apiKey, agentId: 'bot' }) },
  *     prompt: '...',
  *   })
  */
-export function agentmemMemorize(config: AgentMemConfig) {
+export function dinomemMemorize(config: DinoMemConfig) {
   const mem = new MemoryStore({ apiKey: config.apiKey, baseUrl: config.baseUrl })
 
   return tool({
@@ -55,8 +55,8 @@ export function agentmemMemorize(config: AgentMemConfig) {
           ? `Memory already existed (id: ${result.writeId}).`
           : `Memory saved (id: ${result.writeId}).`
       } catch (err) {
-        if (err instanceof AgentMemError) return `AgentMem error (${err.status}): ${err.message}`
-        return `AgentMem error: ${err instanceof Error ? err.message : String(err)}`
+        if (err instanceof DinoMemError) return `DinoMem error (${err.status}): ${err.message}`
+        return `DinoMem error: ${err instanceof Error ? err.message : String(err)}`
       }
     },
   })
@@ -66,7 +66,7 @@ export function agentmemMemorize(config: AgentMemConfig) {
  * Vercel AI SDK tool for recalling memories relevant to a question. Returns a
  * prompt-prefixed string the model can splice into its reasoning.
  */
-export function agentmemRecall(config: AgentMemConfig) {
+export function dinomemRecall(config: DinoMemConfig) {
   return tool({
     description:
       'Search long-term memory for facts relevant to the current question. ' +
@@ -90,8 +90,8 @@ export function agentmemRecall(config: AgentMemConfig) {
         if (hits.length === 0) return 'No relevant memories found.'
         return hits.map(h => `- ${h.content}`).join('\n')
       } catch (err) {
-        if (err instanceof AgentMemError) return `AgentMem error (${err.status}): ${err.message}`
-        return `AgentMem error: ${err instanceof Error ? err.message : String(err)}`
+        if (err instanceof DinoMemError) return `DinoMem error (${err.status}): ${err.message}`
+        return `DinoMem error: ${err instanceof Error ? err.message : String(err)}`
       }
     },
   })

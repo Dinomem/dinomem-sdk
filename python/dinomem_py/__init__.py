@@ -1,4 +1,4 @@
-"""AgentMem — Memory API for AI agents. Postgres-native, TypeScript-first, no Neo4j."""
+"""DinoMem — Memory API for AI agents. Postgres-native, TypeScript-first, no Neo4j."""
 
 from .client import AsyncMemoryStore, Conflict, MemoryHit, MemoryStore
 

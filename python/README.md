@@ -1,20 +1,20 @@
-# agentmem-py
+# dinomem-py
 
-Python SDK for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
+Python SDK for [DinoMem](https://dinomem-dashboard.vercel.app) — the memory API for AI agents.
 
 ## Install
 
 ```bash
-pip install agentmem-py
+pip install dinomem-py
 ```
 
 ## Usage
 
 ```python
 import os
-from agentmem_py import MemoryStore
+from dinomem_py import MemoryStore
 
-mem = MemoryStore(api_key=os.environ["AGENTMEM_API_KEY"])
+mem = MemoryStore(api_key=os.environ["DINOMEM_API_KEY"])
 
 mem.write(content="user prefers dark mode", agent_id="agent-1", scope="user")
 hits = mem.search(query="theme preference", agent_id="agent-1", top_k=5)
@@ -26,7 +26,7 @@ for h in hits:
 
 ```python
 import asyncio
-from agentmem_py import AsyncMemoryStore
+from dinomem_py import AsyncMemoryStore
 
 async def main():
     async with AsyncMemoryStore(api_key="...") as mem:

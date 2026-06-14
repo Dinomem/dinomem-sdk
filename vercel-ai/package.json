@@ -1,17 +1,17 @@
 {
-  "name": "@agentmem/vercel-ai-provider",
+  "name": "@dinomem/vercel-ai-provider",
   "version": "0.2.0",
-  "description": "AgentMem integration for the Vercel AI SDK — middleware, tools, and helpers for any model",
+  "description": "DinoMem integration for the Vercel AI SDK — middleware, tools, and helpers for any model",
   "license": "Apache-2.0",
-  "author": "rooney011 <bvsa2020@gmail.com>",
-  "homepage": "https://agentmem-dashboard.vercel.app",
+  "author": "DinoMem",
+  "homepage": "https://dinomem-dashboard.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "url": "git+https://github.com/DinoMem/dinomem-sdk.git",
     "directory": "vercel-ai"
   },
   "bugs": {
-    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+    "url": "https://github.com/DinoMem/dinomem-sdk/issues"
   },
   "keywords": [
     "vercel",
@@ -45,7 +45,7 @@
     "test": "node --test --import=tsx test/*.test.ts"
   },
   "dependencies": {
-    "@agentmem/sdk": "^0.8.0"
+    "@dinomem/sdk": "^0.8.0"
   },
   "peerDependencies": {
     "ai": "^6.0.0",

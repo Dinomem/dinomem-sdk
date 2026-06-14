@@ -1,4 +1,4 @@
-export { MemoryStore, AgentMemError, DEFAULT_BASE_URL } from './client.ts'
+export { MemoryStore, DinoMemError, DEFAULT_BASE_URL } from './client.ts'
 export type {
   ClientOptions,
   WriteParams, WriteResult,

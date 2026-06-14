@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentmem-py"
+name = "dinomem-py"
 version = "0.2.1"
 description = "Memory API for AI agents — Postgres-native, graph memory included, no Neo4j"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.8"
-authors = [{ name = "rooney011", email = "bvsa2020@gmail.com" }]
+authors = [{ name = "DinoMem" }]
 keywords = ["ai", "agents", "memory", "langchain", "crewai", "mem0", "vector", "postgres"]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -30,9 +30,9 @@ async = ["httpx[http2]>=0.24.0"]
 dev   = ["pytest", "pytest-asyncio", "python-dotenv"]
 
 [project.urls]
-Homepage   = "https://agentmem-dashboard.vercel.app"
-Repository = "https://github.com/rooney011/agentmem-sdk"
-Issues     = "https://github.com/rooney011/agentmem-sdk/issues"
+Homepage   = "https://dinomem-dashboard.vercel.app"
+Repository = "https://github.com/DinoMem/dinomem-sdk"
+Issues     = "https://github.com/DinoMem/dinomem-sdk/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["agentmem_py"]
+packages = ["dinomem_py"]

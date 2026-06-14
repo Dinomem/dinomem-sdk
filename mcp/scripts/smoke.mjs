@@ -59,11 +59,11 @@ function withKey(env) {
 
 async function main() {
   // 1. Missing key → expect non-zero exit with helpful stderr
-  console.log('▸ test 1: missing AGENTMEM_API_KEY')
-  const noKey = await withKey({ AGENTMEM_API_KEY: '' })
+  console.log('▸ test 1: missing DINOMEM_API_KEY')
+  const noKey = await withKey({ DINOMEM_API_KEY: '' })
   console.log('  exit:', noKey.code)
   console.log('  stderr first line:', noKey.stderr.split('\n')[0])
-  if (noKey.code !== 1 || !noKey.stderr.includes('AGENTMEM_API_KEY')) {
+  if (noKey.code !== 1 || !noKey.stderr.includes('DINOMEM_API_KEY')) {
     console.error('  ✗ expected exit 1 and a helpful stderr line')
     process.exit(1)
   }
@@ -72,7 +72,7 @@ async function main() {
   // 2. Full handshake with a dummy key → list tools
   console.log('▸ test 2: initialize + tools/list')
   const child = spawn(process.execPath, [bin], {
-    env:    { ...process.env, AGENTMEM_API_KEY: 'sk-smoke-test', AGENTMEM_BASE_URL: 'http://127.0.0.1:9' },
+    env:    { ...process.env, DINOMEM_API_KEY: 'sk-smoke-test', DINOMEM_BASE_URL: 'http://127.0.0.1:9' },
     stdio:  ['pipe', 'pipe', 'pipe'],
   })
   child.stderr.setEncoding('utf8')
@@ -110,7 +110,7 @@ async function main() {
   const text    = callResp.result?.content?.[0]?.text ?? ''
   console.log('  isError:', isError, '/ text:', text.slice(0, 80))
   if (!isError) { console.error('  ✗ expected an error response'); child.kill(); process.exit(1) }
-  console.log('  ✓ surfaced AgentMemError to the model cleanly\n')
+  console.log('  ✓ surfaced DinoMemError to the model cleanly\n')
 
   child.kill()
   console.log('all smoke tests passed.')

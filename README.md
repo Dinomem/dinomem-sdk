@@ -1,29 +1,29 @@
-# AgentMem SDK
+# DinoMem SDK
 
-Official client SDKs for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
+Official client SDKs for [DinoMem](https://dinomem-dashboard.vercel.app) — the memory API for AI agents.
 
 | Language | Package | Source |
 |---|---|---|
-| TypeScript / JavaScript | [`@agentmem/sdk`](https://www.npmjs.com/package/@agentmem/sdk) | [`./typescript`](./typescript) |
-| Python | [`agentmem-py`](https://pypi.org/project/agentmem-py/) | [`./python`](./python) |
-| CLI (init) | [`@agentmem/cli`](https://www.npmjs.com/package/@agentmem/cli) | [`./cli`](./cli) |
-| MCP server | [`@agentmem/mcp`](https://www.npmjs.com/package/@agentmem/mcp) | [`./mcp`](./mcp) |
-| Mastra integration | [`@agentmem/mastra`](https://www.npmjs.com/package/@agentmem/mastra) | [`./mastra`](./mastra) |
-| Claude Agent SDK integration | [`@agentmem/claude-agent`](https://www.npmjs.com/package/@agentmem/claude-agent) | [`./claude-agent`](./claude-agent) |
-| Vercel AI SDK integration | [`@agentmem/vercel-ai-provider`](https://www.npmjs.com/package/@agentmem/vercel-ai-provider) | [`./vercel-ai`](./vercel-ai) |
-| CrewAI integration (Python) | [`agentmem-crewai`](https://pypi.org/project/agentmem-crewai/) | [`./crewai`](./crewai) |
+| TypeScript / JavaScript | [`@dinomem/sdk`](https://www.npmjs.com/package/@dinomem/sdk) | [`./typescript`](./typescript) |
+| Python | [`dinomem-py`](https://pypi.org/project/dinomem-py/) | [`./python`](./python) |
+| CLI (init) | [`@dinomem/cli`](https://www.npmjs.com/package/@dinomem/cli) | [`./cli`](./cli) |
+| MCP server | [`@dinomem/mcp`](https://www.npmjs.com/package/@dinomem/mcp) | [`./mcp`](./mcp) |
+| Mastra integration | [`@dinomem/mastra`](https://www.npmjs.com/package/@dinomem/mastra) | [`./mastra`](./mastra) |
+| Claude Agent SDK integration | [`@dinomem/claude-agent`](https://www.npmjs.com/package/@dinomem/claude-agent) | [`./claude-agent`](./claude-agent) |
+| Vercel AI SDK integration | [`@dinomem/vercel-ai-provider`](https://www.npmjs.com/package/@dinomem/vercel-ai-provider) | [`./vercel-ai`](./vercel-ai) |
+| CrewAI integration (Python) | [`dinomem-crewai`](https://pypi.org/project/dinomem-crewai/) | [`./crewai`](./crewai) |
 
-Both SDKs are thin HTTP clients over the AgentMem REST API. They have no server-side dependencies and no proprietary code — the API itself is a separate (closed-source) project.
+Both SDKs are thin HTTP clients over the DinoMem REST API. They have no server-side dependencies and no proprietary code — the API itself is a separate (closed-source) project.
 
 ## One-command setup
 
 In an existing TypeScript or Python project:
 
 ```bash
-npx @agentmem/cli init
+npx @dinomem/cli init
 ```
 
-The CLI detects your project, installs the right SDK, adds an env placeholder, and drops an `agentmem-example.{ts,py}` demo script. See [`./cli`](./cli) for flags.
+The CLI detects your project, installs the right SDK, adds an env placeholder, and drops an `dinomem-example.{ts,py}` demo script. See [`./cli`](./cli) for flags.
 
 ## Use it from Claude / Cursor (MCP)
 
@@ -32,10 +32,10 @@ Add to your MCP client config:
 ```json
 {
   "mcpServers": {
-    "agentmem": {
+    "dinomem": {
       "command": "npx",
-      "args":    ["-y", "@agentmem/mcp"],
-      "env":     { "AGENTMEM_API_KEY": "sk-..." }
+      "args":    ["-y", "@dinomem/mcp"],
+      "env":     { "DINOMEM_API_KEY": "sk-..." }
     }
   }
 }
@@ -47,15 +47,15 @@ The server exposes 8 tools (`memory_write`, `memory_search`, `memory_get`, `memo
 
 ```ts
 import { Agent } from '@mastra/core/agent'
-import { AgentMemIntegration, agentmemMemorize, agentmemRemember } from '@agentmem/mastra'
+import { DinoMemIntegration, dinomemMemorize, dinomemRemember } from '@dinomem/mastra'
 
-const agentmem = new AgentMemIntegration({ apiKey: process.env.AGENTMEM_API_KEY!, agentId: 'bot' })
+const dinomem = new DinoMemIntegration({ apiKey: process.env.DINOMEM_API_KEY!, agentId: 'bot' })
 
 new Agent({
   name: 'support',
   tools: {
-    memorize: agentmemMemorize(agentmem),
-    remember: agentmemRemember(agentmem),
+    memorize: dinomemMemorize(dinomem),
+    remember: dinomemRemember(dinomem),
   },
 })
 ```
@@ -66,15 +66,15 @@ See [`./mastra`](./mastra) for defaults, overrides, and the raw-hits variant.
 
 ```ts
 import { query } from '@anthropic-ai/claude-agent-sdk'
-import { agentmemMcpServer, agentmemRecallHook } from '@agentmem/claude-agent'
+import { dinomemMcpServer, dinomemRecallHook } from '@dinomem/claude-agent'
 
-const cfg = { apiKey: process.env.AGENTMEM_API_KEY!, agentId: 'bot' }
+const cfg = { apiKey: process.env.DINOMEM_API_KEY!, agentId: 'bot' }
 
 const result = query({
   prompt: 'help me debug this',
   options: {
-    mcpServers: { agentmem: agentmemMcpServer(cfg) },
-    hooks:      { UserPromptSubmit: [{ hooks: [agentmemRecallHook(cfg)] }] },
+    mcpServers: { dinomem: dinomemMcpServer(cfg) },
+    hooks:      { UserPromptSubmit: [{ hooks: [dinomemRecallHook(cfg)] }] },
   },
 })
 ```
@@ -86,11 +86,11 @@ You get both an in-process MCP server (8 memory tools) and a `UserPromptSubmit` 
 ```ts
 import { generateText, wrapLanguageModel } from 'ai'
 import { anthropic } from '@ai-sdk/anthropic'
-import { createAgentMemMiddleware } from '@agentmem/vercel-ai-provider'
+import { createDinoMemMiddleware } from '@dinomem/vercel-ai-provider'
 
 const model = wrapLanguageModel({
   model:      anthropic('claude-opus-4-7'),
-  middleware: createAgentMemMiddleware({ apiKey: process.env.AGENTMEM_API_KEY!, agentId: 'bot' }),
+  middleware: createDinoMemMiddleware({ apiKey: process.env.DINOMEM_API_KEY!, agentId: 'bot' }),
 })
 
 const { text } = await generateText({ model, prompt: '...' })
@@ -102,36 +102,36 @@ Middleware auto-injects relevant memories on every call; tools and helpers are a
 
 ```python
 from crewai import Agent
-from agentmem_crewai import AgentMemConfig, create_agentmem_tools
+from dinomem_crewai import DinoMemConfig, create_dinomem_tools
 
-config = AgentMemConfig(api_key="sk-...", agent_id="support-bot")
+config = DinoMemConfig(api_key="sk-...", agent_id="support-bot")
 
 agent = Agent(
     role="Support",
     goal="Help customers and remember preferences",
     backstory="...",
-    tools=create_agentmem_tools(config),
+    tools=create_dinomem_tools(config),
 )
 ```
 
-Drop-in replacements for CrewAI's built-in `RecallMemoryTool` / `RememberTool`, backed by AgentMem instead of LanceDB. See [`./crewai`](./crewai).
+Drop-in replacements for CrewAI's built-in `RecallMemoryTool` / `RememberTool`, backed by DinoMem instead of LanceDB. See [`./crewai`](./crewai).
 
 ## Benchmark
 
-Methodology and reproducible harness for comparing AgentMem against Mem0, Zep, Cognee, Supermemory, LangMem, and a pgvector baseline on **multi-agent** memory scenarios (contradictions, CRDT convergence, scope enforcement, temporal queries) lives in a separate repo: [`agentmem-bench`](https://github.com/rooney011/agentmem-bench). Design phase — implementation in progress.
+Methodology and reproducible harness for comparing DinoMem against Mem0, Zep, Cognee, Supermemory, LangMem, and a pgvector baseline on **multi-agent** memory scenarios (contradictions, CRDT convergence, scope enforcement, temporal queries) lives in a separate repo: [`dinomem-bench`](https://github.com/DinoMem/dinomem-bench). Design phase — implementation in progress.
 
 ## Quick start
 
 ### TypeScript
 
 ```bash
-npm install @agentmem/sdk
+npm install @dinomem/sdk
 ```
 
 ```ts
-import { MemoryStore } from '@agentmem/sdk'
+import { MemoryStore } from '@dinomem/sdk'
 
-const mem = new MemoryStore({ apiKey: process.env.AGENTMEM_API_KEY! })
+const mem = new MemoryStore({ apiKey: process.env.DINOMEM_API_KEY! })
 
 await mem.write({ content: 'user prefers dark mode', agentId: 'agent-1' })
 const hits = await mem.search({ query: 'theme preference', agentId: 'agent-1' })
@@ -140,13 +140,13 @@ const hits = await mem.search({ query: 'theme preference', agentId: 'agent-1' })
 ### Python
 
 ```bash
-pip install agentmem-py
+pip install dinomem-py
 ```
 
 ```python
-from agentmem_py import MemoryStore
+from dinomem_py import MemoryStore
 
-mem = MemoryStore(api_key=os.environ["AGENTMEM_API_KEY"])
+mem = MemoryStore(api_key=os.environ["DINOMEM_API_KEY"])
 
 mem.write(content="user prefers dark mode", agent_id="agent-1")
 hits = mem.search(query="theme preference", agent_id="agent-1")
@@ -154,7 +154,7 @@ hits = mem.search(query="theme preference", agent_id="agent-1")
 
 ## Configuration
 
-Both SDKs read the API base URL from constructor options (`baseUrl` / `base_url`). The default points at AgentMem's hosted API; self-hosters can override it to hit their own deployment.
+Both SDKs read the API base URL from constructor options (`baseUrl` / `base_url`). The default points at DinoMem's hosted API; self-hosters can override it to hit their own deployment.
 
 ## License
 

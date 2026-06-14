@@ -4,11 +4,11 @@ import type { Lang } from './detect.ts'
 
 const VERSION = '0.1.0'
 
-const HELP = `${pc.bold('agentmem')} — set up AgentMem in your project
+const HELP = `${pc.bold('dinomem')} — set up DinoMem in your project
 
 ${pc.bold('Usage')}
-  npx @agentmem/cli ${pc.dim('[command] [options]')}
-  agentmem init    ${pc.dim('(after install)')}
+  npx @dinomem/cli ${pc.dim('[command] [options]')}
+  dinomem init    ${pc.dim('(after install)')}
 
 ${pc.bold('Commands')}
   init             Install the SDK, add an env file, drop an example. ${pc.dim('(default)')}

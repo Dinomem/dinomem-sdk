@@ -1,16 +1,16 @@
 {
-  "name": "@agentmem/sdk",
+  "name": "@dinomem/sdk",
   "version": "0.8.0",
-  "description": "TypeScript SDK for AgentMem — the memory API for AI agents",
+  "description": "TypeScript SDK for DinoMem — the memory API for AI agents",
   "license": "Apache-2.0",
-  "author": "rooney011 <bvsa2020@gmail.com>",
-  "homepage": "https://agentmem-dashboard.vercel.app",
+  "author": "DinoMem",
+  "homepage": "https://dinomem-dashboard.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rooney011/agentmem-sdk.git",
+    "url": "https://github.com/DinoMem/dinomem-sdk.git",
     "directory": "typescript"
   },
-  "bugs": { "url": "https://github.com/rooney011/agentmem-sdk/issues" },
+  "bugs": { "url": "https://github.com/DinoMem/dinomem-sdk/issues" },
   "keywords": ["ai", "agents", "memory", "llm", "rag", "vector", "sdk"],
   "type": "module",
   "main":   "./dist/index.cjs",

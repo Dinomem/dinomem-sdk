@@ -10,8 +10,8 @@ Role = Literal["planner", "executor", "observer"]
 
 
 @dataclass(frozen=True)
-class AgentMemConfig:
-    """Configuration for AgentMem CrewAI tools.
+class DinoMemConfig:
+    """Configuration for DinoMem CrewAI tools.
 
     The same config is used by every helper and tool in this package. Once
     you've built tools with a given config, the values are frozen — to change

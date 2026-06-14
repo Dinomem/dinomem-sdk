@@ -2,11 +2,11 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { generateObject, wrapLanguageModel } from 'ai'
 import { z } from 'zod'
-import { MemoryStore, type MemoryHit } from '@agentmem/sdk'
+import { MemoryStore, type MemoryHit } from '@dinomem/sdk'
 import {
-  createAgentMemMiddleware,
-  agentmemMemorize,
-  agentmemRecall,
+  createDinoMemMiddleware,
+  dinomemMemorize,
+  dinomemRecall,
   promptToQuery,
   retrieveMemories,
   searchMemories,
@@ -58,14 +58,14 @@ test('promptToQuery returns empty for empty input', () => {
 
 // ── middleware ──────────────────────────────────────────────────────────────
 
-test('createAgentMemMiddleware returns a v3 LanguageModelMiddleware', () => {
-  const mw = createAgentMemMiddleware({ apiKey: 'sk-fake', agentId: 'a' })
+test('createDinoMemMiddleware returns a v3 LanguageModelMiddleware', () => {
+  const mw = createDinoMemMiddleware({ apiKey: 'sk-fake', agentId: 'a' })
   assert.equal(mw.specificationVersion, 'v3')
   assert.equal(typeof mw.transformParams, 'function')
 })
 
 test('middleware leaves params unchanged when search throws', async () => {
-  const mw = createAgentMemMiddleware({
+  const mw = createDinoMemMiddleware({
     apiKey:  'sk-fake',
     baseUrl: 'http://127.0.0.1:9',
     agentId: 'a',
@@ -87,20 +87,20 @@ test('middleware leaves params unchanged when search throws', async () => {
   }
   // Param should be unchanged (still one message)
   assert.equal((out.prompt as any[]).length, 1)
-  assert.ok(writes.some(s => s.includes('[agentmem-middleware]')))
+  assert.ok(writes.some(s => s.includes('[dinomem-middleware]')))
 })
 
 // ── tools ───────────────────────────────────────────────────────────────────
 
-test('agentmemMemorize tool has the expected shape', () => {
-  const t = agentmemMemorize({ apiKey: 'sk-fake', agentId: 'a' })
+test('dinomemMemorize tool has the expected shape', () => {
+  const t = dinomemMemorize({ apiKey: 'sk-fake', agentId: 'a' })
   assert.ok(t.description?.includes('memory'))
   assert.ok(t.inputSchema)
   assert.ok(typeof (t as any).execute === 'function')
 })
 
-test('agentmemRecall tool has the expected shape', () => {
-  const t = agentmemRecall({ apiKey: 'sk-fake', agentId: 'a' })
+test('dinomemRecall tool has the expected shape', () => {
+  const t = dinomemRecall({ apiKey: 'sk-fake', agentId: 'a' })
   assert.ok(t.description?.toLowerCase().includes('long-term memory'))
   assert.ok(t.inputSchema)
   assert.ok(typeof (t as any).execute === 'function')
@@ -137,7 +137,7 @@ test('searchMemories drops hits with relevance_score: null (default minScore)', 
   // Regression for the rerank silent-degrade fix: relevance_score=null means
   // rerank was requested but failed. Substituting the raw `score` (different
   // range/semantics) was the original bug — these hits must be dropped, not
-  // injected, even when minScore=0 (the default). Mirrors @agentmem/claude-agent.
+  // injected, even when minScore=0 (the default). Mirrors @dinomem/claude-agent.
   const origSearch = MemoryStore.prototype.search
   MemoryStore.prototype.search = async (): Promise<MemoryHit[]> => [
     makeHit({ id: '1', content: 'kept',    relevance_score: 0.9  }),
@@ -159,7 +159,7 @@ test('searchMemories drops hits with relevance_score: null (default minScore)', 
 
 // ── generateObject parity ───────────────────────────────────────────────────
 
-test('createAgentMemMiddleware handles generateObject-style structured-output params', async () => {
+test('createDinoMemMiddleware handles generateObject-style structured-output params', async () => {
   // Unit-level check: when called with a `generate`-type params object that
   // includes a JSON `responseFormat` (the shape generateObject produces), the
   // middleware injects memory into the prompt and preserves the responseFormat.
@@ -168,7 +168,7 @@ test('createAgentMemMiddleware handles generateObject-style structured-output pa
     makeHit({ id: '1', content: 'user prefers terse answers' }),
   ]
   try {
-    const mw = createAgentMemMiddleware({ apiKey: 'sk-fake', agentId: 'a' })
+    const mw = createDinoMemMiddleware({ apiKey: 'sk-fake', agentId: 'a' })
     const params = {
       prompt: [{ role: 'user', content: 'summarize this' } as any],
       responseFormat: {
@@ -223,7 +223,7 @@ test('generateObject flows through the middleware end-to-end', async () => {
   try {
     const wrapped = wrapLanguageModel({
       model:      stub as any,
-      middleware: createAgentMemMiddleware({ apiKey: 'sk-fake', agentId: 'a' }),
+      middleware: createDinoMemMiddleware({ apiKey: 'sk-fake', agentId: 'a' }),
     })
 
     const { object } = await generateObject({

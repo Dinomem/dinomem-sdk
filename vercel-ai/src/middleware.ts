@@ -1,7 +1,7 @@
 import type { LanguageModelV3Middleware } from '@ai-sdk/provider'
-import { AgentMemError } from '@agentmem/sdk'
+import { DinoMemError } from '@dinomem/sdk'
 import {
-  type AgentMemConfig,
+  type DinoMemConfig,
   DEFAULT_PREFIX,
   searchMemories,
   promptToQuery,
@@ -22,34 +22,34 @@ import {
  * @example
  *   import { wrapLanguageModel } from 'ai'
  *   import { openai } from '@ai-sdk/openai'
- *   import { createAgentMemMiddleware, type LanguageModel } from '@agentmem/vercel-ai-provider'
+ *   import { createDinoMemMiddleware, type LanguageModel } from '@dinomem/vercel-ai-provider'
  *
  *   const baseModel: LanguageModel = openai('gpt-4o-mini')
  *   const wrapped = wrapLanguageModel({
  *     model:      baseModel,
- *     middleware: createAgentMemMiddleware({ apiKey, agentId: 'bot' }),
+ *     middleware: createDinoMemMiddleware({ apiKey, agentId: 'bot' }),
  *   })
  */
 export type LanguageModel = Parameters<typeof import('ai').wrapLanguageModel>[0]['model']
 
 /**
- * Build a Vercel AI SDK middleware that, on every model call, searches AgentMem
+ * Build a Vercel AI SDK middleware that, on every model call, searches DinoMem
  * with the user's latest message and prepends matching memories to the system
  * prompt.
  *
  * @example
  *   import { wrapLanguageModel } from 'ai'
  *   import { anthropic } from '@ai-sdk/anthropic'
- *   import { createAgentMemMiddleware } from '@agentmem/vercel-ai-provider'
+ *   import { createDinoMemMiddleware } from '@dinomem/vercel-ai-provider'
  *
  *   const model = wrapLanguageModel({
  *     model:      anthropic('claude-opus-4-7'),
- *     middleware: createAgentMemMiddleware({ apiKey, agentId: 'bot' }),
+ *     middleware: createDinoMemMiddleware({ apiKey, agentId: 'bot' }),
  *   })
  *
  *   const { text } = await generateText({ model, prompt: '...' })
  */
-export function createAgentMemMiddleware(config: AgentMemConfig): LanguageModelV3Middleware {
+export function createDinoMemMiddleware(config: DinoMemConfig): LanguageModelV3Middleware {
   const prefix = config.prefix ?? DEFAULT_PREFIX
 
   return {
@@ -64,9 +64,9 @@ export function createAgentMemMiddleware(config: AgentMemConfig): LanguageModelV
       try {
         hits = await searchMemories(query, config)
       } catch (err) {
-        const msg = err instanceof AgentMemError
-          ? `[agentmem-middleware] search failed (${err.status}): ${err.message}`
-          : `[agentmem-middleware] search failed: ${err instanceof Error ? err.message : String(err)}`
+        const msg = err instanceof DinoMemError
+          ? `[dinomem-middleware] search failed (${err.status}): ${err.message}`
+          : `[dinomem-middleware] search failed: ${err instanceof Error ? err.message : String(err)}`
         process.stderr.write(msg + '\n')
         return params
       }

@@ -6,5 +6,5 @@ export default defineConfig({
   target:    'node18',
   dts:       true,
   clean:     true,
-  external:  ['@anthropic-ai/claude-agent-sdk', 'zod', '@agentmem/sdk'],
+  external:  ['@anthropic-ai/claude-agent-sdk', 'zod', '@dinomem/sdk'],
 })

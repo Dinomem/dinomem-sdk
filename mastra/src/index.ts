@@ -1,12 +1,12 @@
 import { Integration } from '@mastra/core/integration'
 import { createTool } from '@mastra/core/tools'
-import { MemoryStore, type MemoryHit, type Scope, type Role } from '@agentmem/sdk'
+import { MemoryStore, type MemoryHit, type Scope, type Role } from '@dinomem/sdk'
 import { z } from 'zod'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-export interface AgentMemConfig {
-  /** AgentMem API key. Get one at https://agentmem-dashboard.vercel.app */
+export interface DinoMemConfig {
+  /** DinoMem API key. Get one at https://dinomem-dashboard.vercel.app */
   apiKey:      string
   /** Override the API base URL (self-hosters). */
   baseUrl?:    string
@@ -46,7 +46,7 @@ export interface Message {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 const MEMORY_PROMPT_PREFIX =
-  'Relevant memories retrieved from AgentMem. Use these to ground your response if they are relevant; ' +
+  'Relevant memories retrieved from DinoMem. Use these to ground your response if they are relevant; ' +
   'ignore them if they are not. Do not respond to or quote this preamble. Memories:\n\n'
 
 function messagesToContent(messages: Message[] | string): string {
@@ -64,7 +64,7 @@ function requireAgentId(opts: { agentId?: string }, fallback?: string): string {
   const id = opts.agentId ?? fallback
   if (!id) {
     throw new Error(
-      '[@agentmem/mastra] agentId is required. Pass it on the integration config ' +
+      '[@dinomem/mastra] agentId is required. Pass it on the integration config ' +
       'or per-call (constructor `agentId` or tool input `agentId`).',
     )
   }
@@ -73,20 +73,20 @@ function requireAgentId(opts: { agentId?: string }, fallback?: string): string {
 
 // ── Integration class ───────────────────────────────────────────────────────
 
-export class AgentMemIntegration extends Integration {
-  readonly name        = 'AGENTMEM'
+export class DinoMemIntegration extends Integration {
+  readonly name        = 'DINOMEM'
   readonly logoUrl     = ''
   readonly categories  = ['ai', 'memory']
   readonly description =
-    'AgentMem — Postgres-native memory layer for AI agents. Hybrid retrieval (semantic + keyword + graph), ' +
+    'DinoMem — Postgres-native memory layer for AI agents. Hybrid retrieval (semantic + keyword + graph), ' +
     'conflict detection, multi-agent scoping.'
 
   /** The underlying SDK client; expose for advanced cases. */
   readonly client: MemoryStore
 
-  private readonly defaults: Omit<AgentMemConfig, 'apiKey' | 'baseUrl'>
+  private readonly defaults: Omit<DinoMemConfig, 'apiKey' | 'baseUrl'>
 
-  constructor(config: AgentMemConfig) {
+  constructor(config: DinoMemConfig) {
     super()
     this.client = new MemoryStore({ apiKey: config.apiKey, baseUrl: config.baseUrl })
     this.defaults = {
@@ -159,17 +159,17 @@ const scopeSchema = z.enum(['private', 'team', 'global'])
 const roleSchema  = z.enum(['planner', 'executor', 'observer'])
 
 /**
- * Tool that stores a fact in AgentMem. Drop into a Mastra agent's `tools` map.
+ * Tool that stores a fact in DinoMem. Drop into a Mastra agent's `tools` map.
  *
  * @example
- *   const agentmem = new AgentMemIntegration({ apiKey, agentId: 'support-bot' })
+ *   const dinomem = new DinoMemIntegration({ apiKey, agentId: 'support-bot' })
  *   const agent = new Agent({
- *     tools: { memorize: agentmemMemorize(agentmem) },
+ *     tools: { memorize: dinomemMemorize(dinomem) },
  *   })
  */
-export function agentmemMemorize(integration: AgentMemIntegration, defaults: WriteOptions = {}) {
+export function dinomemMemorize(integration: DinoMemIntegration, defaults: WriteOptions = {}) {
   return createTool({
-    id:          'agentmem-memorize',
+    id:          'dinomem-memorize',
     description:
       'Save a fact, preference, decision, or constraint to long-term memory so future runs can recall it. ' +
       'Use sparingly — only for durable facts, not chatty observations.',
@@ -191,12 +191,12 @@ export function agentmemMemorize(integration: AgentMemIntegration, defaults: Wri
 }
 
 /**
- * Tool that recalls AgentMem memories relevant to a question. Returns a
+ * Tool that recalls DinoMem memories relevant to a question. Returns a
  * prompt-prefixed string the model can drop directly into its reasoning.
  */
-export function agentmemRemember(integration: AgentMemIntegration, defaults: SearchOptions = {}) {
+export function dinomemRemember(integration: DinoMemIntegration, defaults: SearchOptions = {}) {
   return createTool({
-    id:          'agentmem-remember',
+    id:          'dinomem-remember',
     description:
       'Search long-term memory for facts relevant to the current question. ' +
       'Call this when you need context the conversation has not provided — past decisions, user preferences, prior work.',
@@ -219,5 +219,5 @@ export function agentmemRemember(integration: AgentMemIntegration, defaults: Sea
 
 // ── Re-exports for convenience ──────────────────────────────────────────────
 
-export { MemoryStore, AgentMemError } from '@agentmem/sdk'
-export type { Scope, Role, MemoryHit } from '@agentmem/sdk'
+export { MemoryStore, DinoMemError } from '@dinomem/sdk'
+export type { Scope, Role, MemoryHit } from '@dinomem/sdk'

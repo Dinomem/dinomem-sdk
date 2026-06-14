@@ -1,4 +1,4 @@
-"""CrewAI ``BaseTool`` implementations backed by AgentMem.
+"""CrewAI ``BaseTool`` implementations backed by DinoMem.
 
 Mirrors the shape of CrewAI's built-in ``RecallMemoryTool`` / ``RememberTool``
 (in ``crewai/tools/memory_tools.py``) so they're a direct drop-in.
@@ -11,8 +11,8 @@ from typing import Any, Union
 from crewai.tools.base_tool import BaseTool
 from pydantic import BaseModel, Field
 
-from agentmem_crewai.config import AgentMemConfig
-from agentmem_crewai.helpers import _client, search_memories
+from dinomem_crewai.config import DinoMemConfig
+from dinomem_crewai.helpers import _client, search_memories
 
 
 # ── Schemas ──────────────────────────────────────────────────────────────────
@@ -45,8 +45,8 @@ class _RememberArgs(BaseModel):
 # ── Tools ────────────────────────────────────────────────────────────────────
 
 
-class AgentMemRecallTool(BaseTool):
-    """CrewAI tool that recalls relevant facts from AgentMem.
+class DinoMemRecallTool(BaseTool):
+    """CrewAI tool that recalls relevant facts from DinoMem.
 
     Replace the built-in ``RecallMemoryTool`` with this to get hybrid retrieval
     (semantic + keyword + graph) and multi-agent scoping at no extra config.
@@ -59,7 +59,7 @@ class AgentMemRecallTool(BaseTool):
         "(past decisions, user preferences, prior work)."
     )
     args_schema: type[BaseModel] = _RecallArgs
-    config: AgentMemConfig = Field(exclude=True)
+    config: DinoMemConfig = Field(exclude=True)
 
     def _run(self, queries: Union[list[str], str], **_: Any) -> str:
         if isinstance(queries, str):
@@ -78,8 +78,8 @@ class AgentMemRecallTool(BaseTool):
         return "Found memories:\n" + "\n".join(lines)
 
 
-class AgentMemRememberTool(BaseTool):
-    """CrewAI tool that stores facts in AgentMem."""
+class DinoMemRememberTool(BaseTool):
+    """CrewAI tool that stores facts in DinoMem."""
 
     name: str = "Save to memory"
     description: str = (
@@ -87,7 +87,7 @@ class AgentMemRememberTool(BaseTool):
         "so future runs can recall them. Use sparingly — durable facts only."
     )
     args_schema: type[BaseModel] = _RememberArgs
-    config: AgentMemConfig = Field(exclude=True)
+    config: DinoMemConfig = Field(exclude=True)
 
     def _run(self, contents: Union[list[str], str], **_: Any) -> str:
         if isinstance(contents, str):
@@ -116,7 +116,7 @@ class AgentMemRememberTool(BaseTool):
 # ── Factory ─────────────────────────────────────────────────────────────────
 
 
-def create_agentmem_tools(config: AgentMemConfig) -> list[BaseTool]:
+def create_dinomem_tools(config: DinoMemConfig) -> list[BaseTool]:
     """Return both recall + remember tools wired to a shared config.
 
     Matches CrewAI's ``create_memory_tools`` factory shape so you can swap one
@@ -125,14 +125,14 @@ def create_agentmem_tools(config: AgentMemConfig) -> list[BaseTool]:
     .. code-block:: python
 
         from crewai import Agent
-        from agentmem_crewai import AgentMemConfig, create_agentmem_tools
+        from dinomem_crewai import DinoMemConfig, create_dinomem_tools
 
-        config = AgentMemConfig(api_key="sk-...", agent_id="support-bot")
+        config = DinoMemConfig(api_key="sk-...", agent_id="support-bot")
         agent = Agent(
             role="Support",
             goal="Help customers",
             backstory="...",
-            tools=create_agentmem_tools(config),
+            tools=create_dinomem_tools(config),
         )
     """
-    return [AgentMemRecallTool(config=config), AgentMemRememberTool(config=config)]
+    return [DinoMemRecallTool(config=config), DinoMemRememberTool(config=config)]

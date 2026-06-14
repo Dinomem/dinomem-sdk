@@ -1,5 +1,5 @@
-import type { MemoryStore } from '@agentmem/sdk'
-import { AgentMemError } from '@agentmem/sdk'
+import type { MemoryStore } from '@dinomem/sdk'
+import { DinoMemError } from '@dinomem/sdk'
 
 /**
  * MCP tool descriptors. The `description` and parameter docs are read by the
@@ -178,7 +178,7 @@ export async function dispatch(
     const data = await tool.handler(mem, args ?? {})
     return { ok: true, data }
   } catch (err) {
-    if (err instanceof AgentMemError) {
+    if (err instanceof DinoMemError) {
       return { ok: false, error: err.message, status: err.status }
     }
     return { ok: false, error: err instanceof Error ? err.message : String(err) }

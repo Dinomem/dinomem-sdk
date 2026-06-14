@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { MemoryStore, AgentMemError } from '@agentmem/sdk'
+import { MemoryStore, DinoMemError } from '@dinomem/sdk'
 import type { SdkMcpToolDefinition } from '@anthropic-ai/claude-agent-sdk'
 
 const scope = z.enum(['private', 'team', 'global'])
@@ -18,12 +18,12 @@ function ok(data: unknown): ToolResult {
 }
 
 function fail(err: unknown): ToolResult {
-  if (err instanceof AgentMemError) {
-    return { isError: true, content: [{ type: 'text', text: `AgentMem error (${err.status}): ${err.message}` }] }
+  if (err instanceof DinoMemError) {
+    return { isError: true, content: [{ type: 'text', text: `DinoMem error (${err.status}): ${err.message}` }] }
   }
   return {
     isError: true,
-    content: [{ type: 'text', text: `AgentMem error: ${err instanceof Error ? err.message : String(err)}` }],
+    content: [{ type: 'text', text: `DinoMem error: ${err instanceof Error ? err.message : String(err)}` }],
   }
 }
 
@@ -47,7 +47,7 @@ function tool<S extends z.ZodRawShape>(def: {
 }
 
 /**
- * Build the 8 AgentMem tools as `SdkMcpToolDefinition`s. Descriptions are
+ * Build the 8 DinoMem tools as `SdkMcpToolDefinition`s. Descriptions are
  * tuned for model-side selection — keep them precise.
  */
 export function buildTools(mem: MemoryStore): SdkMcpToolDefinition<any>[] {

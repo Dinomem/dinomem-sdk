@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `@agentmem/sdk` will be documented here. This project
+All notable changes to `@dinomem/sdk` will be documented here. This project
 follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html); while we
 are pre-1.0, the **minor** version is bumped for breaking changes.
 
@@ -29,6 +29,6 @@ react deliberately (retry, fall back, or drop).
 
 ### Integration packages
 
-- `@agentmem/claude-agent` and `@agentmem/vercel-ai-provider` now drop hits
+- `@dinomem/claude-agent` and `@dinomem/vercel-ai-provider` now drop hits
   with `relevance_score: null` from injected context. See those packages'
   own release notes for details.

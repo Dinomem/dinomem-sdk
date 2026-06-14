@@ -1,17 +1,17 @@
 {
-  "name": "@agentmem/cli",
+  "name": "@dinomem/cli",
   "version": "0.1.1",
-  "description": "One-command setup for AgentMem — the memory API for AI agents",
+  "description": "One-command setup for DinoMem — the memory API for AI agents",
   "license": "Apache-2.0",
-  "author": "rooney011 <bvsa2020@gmail.com>",
-  "homepage": "https://agentmem-dashboard.vercel.app",
+  "author": "DinoMem",
+  "homepage": "https://dinomem-dashboard.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "url": "git+https://github.com/DinoMem/dinomem-sdk.git",
     "directory": "cli"
   },
   "bugs": {
-    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+    "url": "https://github.com/DinoMem/dinomem-sdk/issues"
   },
   "keywords": [
     "ai",
@@ -23,7 +23,7 @@
   ],
   "type": "module",
   "bin": {
-    "agentmem": "dist/index.js"
+    "dinomem": "dist/index.js"
   },
   "files": [
     "dist",

@@ -1,17 +1,17 @@
 {
-  "name": "@agentmem/mastra",
+  "name": "@dinomem/mastra",
   "version": "0.1.1",
-  "description": "AgentMem integration for Mastra — memory tools for any Mastra agent",
+  "description": "DinoMem integration for Mastra — memory tools for any Mastra agent",
   "license": "Apache-2.0",
-  "author": "rooney011 <bvsa2020@gmail.com>",
-  "homepage": "https://agentmem-dashboard.vercel.app",
+  "author": "DinoMem",
+  "homepage": "https://dinomem-dashboard.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "url": "git+https://github.com/DinoMem/dinomem-sdk.git",
     "directory": "mastra"
   },
   "bugs": {
-    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+    "url": "https://github.com/DinoMem/dinomem-sdk/issues"
   },
   "keywords": [
     "mastra",
@@ -44,7 +44,7 @@
     "test": "node --test --import=tsx test/*.test.ts"
   },
   "dependencies": {
-    "@agentmem/sdk": "^0.7.0"
+    "@dinomem/sdk": "^0.7.0"
   },
   "peerDependencies": {
     "@mastra/core": ">=0.15.3 <0.18.0",

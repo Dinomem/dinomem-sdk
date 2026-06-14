@@ -6,5 +6,5 @@ export default defineConfig({
   target:    'node18',
   dts:       true,
   clean:     true,
-  external:  ['@mastra/core', 'zod', '@agentmem/sdk'],
+  external:  ['@mastra/core', 'zod', '@dinomem/sdk'],
 })

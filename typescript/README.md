@@ -1,24 +1,24 @@
-# @agentmem/sdk
+# @dinomem/sdk
 
-TypeScript SDK for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
+TypeScript SDK for [DinoMem](https://dinomem-dashboard.vercel.app) — the memory API for AI agents.
 
 ## Install
 
 ```bash
-npm install @agentmem/sdk
+npm install @dinomem/sdk
 # or
-pnpm add @agentmem/sdk
+pnpm add @dinomem/sdk
 # or
-yarn add @agentmem/sdk
+yarn add @dinomem/sdk
 ```
 
 ## Usage
 
 ```ts
-import { MemoryStore } from '@agentmem/sdk'
+import { MemoryStore } from '@dinomem/sdk'
 
 const mem = new MemoryStore({
-  apiKey: process.env.AGENTMEM_API_KEY!,
+  apiKey: process.env.DINOMEM_API_KEY!,
   // baseUrl: 'https://your-self-hosted.example.com/functions/v1/api', // optional
 })
 

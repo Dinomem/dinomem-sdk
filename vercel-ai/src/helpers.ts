@@ -1,8 +1,8 @@
-import { MemoryStore, AgentMemError, type MemoryHit, type Scope, type Role } from '@agentmem/sdk'
+import { MemoryStore, DinoMemError, type MemoryHit, type Scope, type Role } from '@dinomem/sdk'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-export interface AgentMemConfig {
+export interface DinoMemConfig {
   apiKey:      string
   baseUrl?:    string
   agentId?:    string
@@ -26,7 +26,7 @@ export interface MessageLike {
 }
 
 export const DEFAULT_PREFIX =
-  'Relevant memories retrieved from AgentMem. Use these to ground your response if they help; ' +
+  'Relevant memories retrieved from DinoMem. Use these to ground your response if they help; ' +
   'ignore them if not. Do not respond to or quote this preamble. Memories:'
 
 // ── Internal helpers ─────────────────────────────────────────────────────────
@@ -63,7 +63,7 @@ function requireAgentId(c: { agentId?: string }, fallback?: string): string {
   const id = c.agentId ?? fallback
   if (!id) {
     throw new Error(
-      '[@agentmem/vercel-ai-provider] agentId is required. Pass it on the config ' +
+      '[@dinomem/vercel-ai-provider] agentId is required. Pass it on the config ' +
       'or per-call.',
     )
   }
@@ -78,14 +78,14 @@ function formatHits(hits: MemoryHit[], prefix: string): string {
 // ── Public helpers (drop-in compatibility with @mem0/vercel-ai-provider) ────
 
 /**
- * Write content to AgentMem. Accepts a single string or a list of chat-style messages.
+ * Write content to DinoMem. Accepts a single string or a list of chat-style messages.
  *
  * @example
  *   await addMemories('User prefers email over phone.', { apiKey, agentId: 'bot' })
  */
 export async function addMemories(
   messages: string | MessageLike[],
-  config: AgentMemConfig,
+  config: DinoMemConfig,
 ): Promise<{ writeId: string; duplicate?: boolean }> {
   const content = typeof messages === 'string' ? messages : messages.map(m => `${m.role}: ${flattenContent(m.content)}`).join('\n')
   const agentId = requireAgentId(config)
@@ -100,7 +100,7 @@ export async function addMemories(
 }
 
 /**
- * Search AgentMem and return a **prompt-prefixed string** ready to splice into
+ * Search DinoMem and return a **prompt-prefixed string** ready to splice into
  * a system prompt. Empty string if no hits.
  *
  * @example
@@ -109,16 +109,16 @@ export async function addMemories(
  */
 export async function retrieveMemories(
   prompt: string | MessageLike[],
-  config: AgentMemConfig,
+  config: DinoMemConfig,
 ): Promise<string> {
   const hits = await searchMemories(prompt, config)
   return formatHits(hits, config.prefix ?? DEFAULT_PREFIX)
 }
 
-/** Search AgentMem and return raw hits with scores. */
+/** Search DinoMem and return raw hits with scores. */
 export async function searchMemories(
   prompt: string | MessageLike[],
-  config: AgentMemConfig,
+  config: DinoMemConfig,
 ): Promise<MemoryHit[]> {
   const query = promptToQuery(prompt)
   if (!query) return []
@@ -136,7 +136,7 @@ export async function searchMemories(
       rerank:     config.rerank,
     })
   } catch (err) {
-    if (err instanceof AgentMemError) throw err
+    if (err instanceof DinoMemError) throw err
     throw err
   }
 
@@ -144,12 +144,12 @@ export async function searchMemories(
   return hits.filter(h => {
     // relevance_score=null means rerank was requested but failed. Drop the hit
     // unconditionally — falling back to the raw `score` mixes incompatible
-    // signals and was the rerank silent-degrade bug. Mirrors @agentmem/claude-agent.
+    // signals and was the rerank silent-degrade bug. Mirrors @dinomem/claude-agent.
     if (h.relevance_score === null) return false
     return (h.relevance_score ?? h.score ?? 0) >= minScore
   })
 }
 
 // Re-export the SDK error for instanceof checks.
-export { AgentMemError, MemoryStore } from '@agentmem/sdk'
-export type { MemoryHit, Scope, Role } from '@agentmem/sdk'
+export { DinoMemError, MemoryStore } from '@dinomem/sdk'
+export type { MemoryHit, Scope, Role } from '@dinomem/sdk'

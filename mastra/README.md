@@ -1,9 +1,9 @@
-# @agentmem/mastra
+# @dinomem/mastra
 
-[Mastra](https://mastra.ai) integration for [AgentMem](https://agentmem-dashboard.vercel.app) — drop-in memory tools for Mastra agents.
+[Mastra](https://mastra.ai) integration for [DinoMem](https://dinomem-dashboard.vercel.app) — drop-in memory tools for Mastra agents.
 
 ```bash
-npm install @agentmem/mastra @mastra/core zod
+npm install @dinomem/mastra @mastra/core zod
 ```
 
 ## Quick start
@@ -11,13 +11,13 @@ npm install @agentmem/mastra @mastra/core zod
 ```ts
 import { Agent } from '@mastra/core/agent'
 import {
-  AgentMemIntegration,
-  agentmemMemorize,
-  agentmemRemember,
-} from '@agentmem/mastra'
+  DinoMemIntegration,
+  dinomemMemorize,
+  dinomemRemember,
+} from '@dinomem/mastra'
 
-const agentmem = new AgentMemIntegration({
-  apiKey:  process.env.AGENTMEM_API_KEY!,
+const dinomem = new DinoMemIntegration({
+  apiKey:  process.env.DINOMEM_API_KEY!,
   agentId: 'support-bot',            // default; tools can override per-call
   scope:   'team',                   // optional default
 })
@@ -29,8 +29,8 @@ const agent = new Agent({
     'constraint), call `memorize`. Before answering, call `remember` to recall ' +
     'prior context.',
   tools: {
-    memorize: agentmemMemorize(agentmem),
-    remember: agentmemRemember(agentmem),
+    memorize: dinomemMemorize(dinomem),
+    remember: dinomemRemember(dinomem),
   },
 })
 ```
@@ -39,14 +39,14 @@ const agent = new Agent({
 
 | Export | Purpose |
 |---|---|
-| `AgentMemIntegration` | Class wrapping the AgentMem SDK; exposes `createMemory` / `searchMemory` / `searchMemoryRaw`. |
-| `agentmemMemorize(integration, defaults?)` | Pre-built Mastra tool. Stores a fact. |
-| `agentmemRemember(integration, defaults?)` | Pre-built Mastra tool. Retrieves relevant memories. |
-| `MemoryStore`, `AgentMemError`, `Scope`, `Role`, `MemoryHit` | Re-exported from `@agentmem/sdk` for convenience. |
+| `DinoMemIntegration` | Class wrapping the DinoMem SDK; exposes `createMemory` / `searchMemory` / `searchMemoryRaw`. |
+| `dinomemMemorize(integration, defaults?)` | Pre-built Mastra tool. Stores a fact. |
+| `dinomemRemember(integration, defaults?)` | Pre-built Mastra tool. Retrieves relevant memories. |
+| `MemoryStore`, `DinoMemError`, `Scope`, `Role`, `MemoryHit` | Re-exported from `@dinomem/sdk` for convenience. |
 
 ## Defaults and overrides
 
-Constructor `AgentMemConfig` accepts default `agentId`, `scope`, `role`, `workflowId`. Every per-call site (tool input or method argument) can override. The merge order is:
+Constructor `DinoMemConfig` accepts default `agentId`, `scope`, `role`, `workflowId`. Every per-call site (tool input or method argument) can override. The merge order is:
 
 `tool input` > `tool factory defaults` > `integration config` > error if still missing.
 
@@ -57,13 +57,13 @@ Constructor `AgentMemConfig` accepts default `agentId`, `scope`, `role`, `workfl
 If you don't want the pre-built tools (e.g., you're writing custom flows):
 
 ```ts
-const text = await agentmem.searchMemory('what does the customer prefer?', {
+const text = await dinomem.searchMemory('what does the customer prefer?', {
   agentId: 'support-bot',
   topK:    5,
 })
 // → prompt-prefixed string ready to inject into the model's context
 
-const ack = await agentmem.createMemory('Customer prefers email over phone.', {
+const ack = await dinomem.createMemory('Customer prefers email over phone.', {
   agentId: 'support-bot',
   scope:   'team',
 })
@@ -73,7 +73,7 @@ const ack = await agentmem.createMemory('Customer prefers email over phone.', {
 For raw results without the prompt prefix:
 
 ```ts
-const hits = await agentmem.searchMemoryRaw('escalation threshold', { agentId: 'support-bot' })
+const hits = await dinomem.searchMemoryRaw('escalation threshold', { agentId: 'support-bot' })
 // → MemoryHit[]
 ```
 

@@ -1,24 +1,24 @@
-# @agentmem/cli
+# @dinomem/cli
 
-One-command setup for [AgentMem](https://agentmem-dashboard.vercel.app) — the memory API for AI agents.
+One-command setup for [DinoMem](https://dinomem-dashboard.vercel.app) — the memory API for AI agents.
 
 ## Usage
 
 In an existing TypeScript or Python project:
 
 ```bash
-npx @agentmem/cli init
+npx @dinomem/cli init
 ```
 
 The CLI will:
 
 1. Detect whether your project is TypeScript or Python.
-2. Install the matching SDK (`@agentmem/sdk` or `agentmem-py`) using your project's package manager (`npm` / `pnpm` / `yarn` / `bun` / `pip` / `uv` / `poetry`).
-3. Add `AGENTMEM_API_KEY=` to `.env.local` (TS) or `.env` (Python).
+2. Install the matching SDK (`@dinomem/sdk` or `dinomem-py`) using your project's package manager (`npm` / `pnpm` / `yarn` / `bun` / `pip` / `uv` / `poetry`).
+3. Add `DINOMEM_API_KEY=` to `.env.local` (TS) or `.env` (Python).
 4. Append that file to `.gitignore` if it isn't already.
-5. Drop an `agentmem-example.{ts,py}` script that does a write + search round-trip.
+5. Drop an `dinomem-example.{ts,py}` script that does a write + search round-trip.
 
-Then paste your key from [the dashboard](https://agentmem-dashboard.vercel.app) into the env file and run the example.
+Then paste your key from [the dashboard](https://dinomem-dashboard.vercel.app) into the env file and run the example.
 
 ## Flags
 

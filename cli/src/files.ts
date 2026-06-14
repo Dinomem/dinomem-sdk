@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync, appendFileSync } from 'node:fs
 import { join } from 'node:path'
 import type { Lang } from './detect.ts'
 
-const ENV_KEY = 'AGENTMEM_API_KEY'
+const ENV_KEY = 'DINOMEM_API_KEY'
 
 /** Returns the env filename we wrote to (or would write to) and whether we changed it. */
 export function writeEnv(cwd: string, lang: Lang): { file: string; changed: boolean } {
@@ -11,13 +11,13 @@ export function writeEnv(cwd: string, lang: Lang): { file: string; changed: bool
   const line = `${ENV_KEY}=`
 
   if (!existsSync(path)) {
-    writeFileSync(path, `# AgentMem — get a key at https://agentmem-dashboard.vercel.app\n${line}\n`, 'utf8')
+    writeFileSync(path, `# DinoMem — get a key at https://dinomem-dashboard.vercel.app\n${line}\n`, 'utf8')
     return { file, changed: true }
   }
   const current = readFileSync(path, 'utf8')
   if (current.includes(ENV_KEY)) return { file, changed: false }
   const prefix = current.endsWith('\n') ? '' : '\n'
-  appendFileSync(path, `${prefix}# AgentMem\n${line}\n`, 'utf8')
+  appendFileSync(path, `${prefix}# DinoMem\n${line}\n`, 'utf8')
   return { file, changed: true }
 }
 
@@ -38,13 +38,13 @@ export function ensureGitignore(cwd: string, lang: Lang): { changed: boolean } {
   return { changed: true }
 }
 
-const TS_EXAMPLE = `import { MemoryStore } from '@agentmem/sdk'
+const TS_EXAMPLE = `import { MemoryStore } from '@dinomem/sdk'
 
-const mem = new MemoryStore({ apiKey: process.env.AGENTMEM_API_KEY! })
+const mem = new MemoryStore({ apiKey: process.env.DINOMEM_API_KEY! })
 
 async function main() {
   const { writeId } = await mem.write({
-    content: 'AgentMem onboarding test — the user ran the init CLI.',
+    content: 'DinoMem onboarding test — the user ran the init CLI.',
     agentId: 'cli-demo',
   })
   console.log('wrote:', writeId)
@@ -61,12 +61,12 @@ main().catch(err => { console.error(err); process.exit(1) })
 `
 
 const PY_EXAMPLE = `import os
-from agentmem_py import MemoryStore
+from dinomem_py import MemoryStore
 
-mem = MemoryStore(api_key=os.environ["AGENTMEM_API_KEY"])
+mem = MemoryStore(api_key=os.environ["DINOMEM_API_KEY"])
 
 result = mem.write(
-    content="AgentMem onboarding test — the user ran the init CLI.",
+    content="DinoMem onboarding test — the user ran the init CLI.",
     agent_id="cli-demo",
 )
 print("wrote:", result["writeId"])
@@ -77,7 +77,7 @@ for h in hits:
 `
 
 export function writeExample(cwd: string, lang: Lang): { file: string; changed: boolean } {
-  const file = lang === 'ts' ? 'agentmem-example.ts' : 'agentmem_example.py'
+  const file = lang === 'ts' ? 'dinomem-example.ts' : 'dinomem_example.py'
   const path = join(cwd, file)
   if (existsSync(path)) return { file, changed: false }
   writeFileSync(path, lang === 'ts' ? TS_EXAMPLE : PY_EXAMPLE, 'utf8')

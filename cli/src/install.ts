@@ -2,8 +2,8 @@ import { spawn } from 'node:child_process'
 import type { Lang, PkgManager } from './detect.ts'
 
 export const SDK_PKG = {
-  ts:     '@agentmem/sdk',
-  python: 'agentmem-py',
+  ts:     '@dinomem/sdk',
+  python: 'dinomem-py',
 } as const
 
 export function installCommand(pm: PkgManager): { cmd: string; args: string[] } {

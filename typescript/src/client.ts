@@ -36,7 +36,7 @@ export class MemoryStore {
 
     const json = await r.json()
     if (!r.ok) {
-      throw new AgentMemError(json?.error ?? `HTTP ${r.status}`, r.status)
+      throw new DinoMemError(json?.error ?? `HTTP ${r.status}`, r.status)
     }
     return json as T
   }
@@ -216,9 +216,9 @@ export class MemoryStore {
   }
 }
 
-export class AgentMemError extends Error {
+export class DinoMemError extends Error {
   constructor(message: string, public readonly status: number) {
     super(message)
-    this.name = 'AgentMemError'
+    this.name = 'DinoMemError'
   }
 }

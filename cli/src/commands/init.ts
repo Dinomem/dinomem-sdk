@@ -12,7 +12,7 @@ export interface InitOptions {
 }
 
 export async function init(opts: InitOptions): Promise<number> {
-  p.intro(pc.bgCyan(pc.black(' AgentMem ')) + pc.cyan(' init '))
+  p.intro(pc.bgCyan(pc.black(' DinoMem ')) + pc.cyan(' init '))
 
   const auto = detect(opts.cwd)
   let lang: Lang
@@ -41,12 +41,12 @@ export async function init(opts: InitOptions): Promise<number> {
   const pm = auto.pm ?? detectPm(opts.cwd, lang)
   const sdkPkg = SDK_PKG[lang]
   const envFile = lang === 'ts' ? '.env.local' : '.env'
-  const exampleFile = lang === 'ts' ? 'agentmem-example.ts' : 'agentmem_example.py'
+  const exampleFile = lang === 'ts' ? 'dinomem-example.ts' : 'dinomem_example.py'
 
   p.note(
     [
       `${pc.dim('install')}      ${previewInstall(lang, pm)}`,
-      `${pc.dim('env file')}     ${envFile}  ${pc.dim('(add AGENTMEM_API_KEY=)')}`,
+      `${pc.dim('env file')}     ${envFile}  ${pc.dim('(add DINOMEM_API_KEY=)')}`,
       `${pc.dim('gitignore')}    + ${envFile}  ${pc.dim('(if missing)')}`,
       `${pc.dim('example')}      ${exampleFile}  ${pc.dim('(write + search demo)')}`,
     ].join('\n'),
@@ -73,7 +73,7 @@ export async function init(opts: InitOptions): Promise<number> {
   }
 
   const env = writeEnv(opts.cwd, lang)
-  p.log.success(env.changed ? `Wrote ${env.file}` : `${env.file} already has ${pc.bold('AGENTMEM_API_KEY')} — left alone`)
+  p.log.success(env.changed ? `Wrote ${env.file}` : `${env.file} already has ${pc.bold('DINOMEM_API_KEY')} — left alone`)
 
   const gi = ensureGitignore(opts.cwd, lang)
   if (gi.changed) p.log.success(`Added ${envFile} to .gitignore`)
@@ -83,7 +83,7 @@ export async function init(opts: InitOptions): Promise<number> {
 
   p.note(
     [
-      `${pc.bold('1.')} Get an API key:  ${pc.cyan('https://agentmem-dashboard.vercel.app')}`,
+      `${pc.bold('1.')} Get an API key:  ${pc.cyan('https://dinomem-dashboard.vercel.app')}`,
       `${pc.bold('2.')} Paste it into:   ${pc.bold(envFile)}`,
       `${pc.bold('3.')} Run the demo:    ${pc.bold(lang === 'ts' ? 'npx tsx ' + ex.file : 'python ' + ex.file)}`,
     ].join('\n'),

@@ -1,5 +1,5 @@
 import type { HookCallback, HookJSONOutput } from '@anthropic-ai/claude-agent-sdk'
-import { MemoryStore, AgentMemError, type Scope } from '@agentmem/sdk'
+import { MemoryStore, DinoMemError, type Scope } from '@dinomem/sdk'
 
 export interface RecallHookConfig {
   apiKey:    string
@@ -21,16 +21,16 @@ export interface RecallHookConfig {
 }
 
 const DEFAULT_PREFIX =
-  'Relevant memories retrieved from AgentMem. Use these to ground your response if relevant; ' +
+  'Relevant memories retrieved from DinoMem. Use these to ground your response if relevant; ' +
   'ignore them if not. Do not respond to or quote this preamble. Memories:'
 
 /**
- * Build a `UserPromptSubmit` hook that searches AgentMem for the user's prompt
+ * Build a `UserPromptSubmit` hook that searches DinoMem for the user's prompt
  * and injects the top hits as `additionalContext` for the turn.
  *
  * @example
  *   import { query } from '@anthropic-ai/claude-agent-sdk'
- *   const recall = agentmemRecallHook({ apiKey, agentId: 'support-bot' })
+ *   const recall = dinomemRecallHook({ apiKey, agentId: 'support-bot' })
  *
  *   query({
  *     prompt,
@@ -39,7 +39,7 @@ const DEFAULT_PREFIX =
  *     },
  *   })
  */
-export function agentmemRecallHook(config: RecallHookConfig): HookCallback {
+export function dinomemRecallHook(config: RecallHookConfig): HookCallback {
   const mem = new MemoryStore({ apiKey: config.apiKey, baseUrl: config.baseUrl })
   const prefix   = config.prefix   ?? DEFAULT_PREFIX
   const minScore = config.minScore ?? 0
@@ -59,9 +59,9 @@ export function agentmemRecallHook(config: RecallHookConfig): HookCallback {
       })
     } catch (err) {
       // Memory failure must not break the turn. Log to stderr; return passively.
-      const msg = err instanceof AgentMemError
-        ? `[agentmem-recall] search failed (${err.status}): ${err.message}`
-        : `[agentmem-recall] search failed: ${err instanceof Error ? err.message : String(err)}`
+      const msg = err instanceof DinoMemError
+        ? `[dinomem-recall] search failed (${err.status}): ${err.message}`
+        : `[dinomem-recall] search failed: ${err instanceof Error ? err.message : String(err)}`
       process.stderr.write(msg + '\n')
       return {}
     }

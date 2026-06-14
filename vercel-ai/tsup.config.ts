@@ -6,5 +6,5 @@ export default defineConfig({
   target:    'node18',
   dts:       true,
   clean:     true,
-  external:  ['ai', 'zod', '@agentmem/sdk', '@ai-sdk/provider'],
+  external:  ['ai', 'zod', '@dinomem/sdk', '@ai-sdk/provider'],
 })

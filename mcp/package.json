@@ -1,17 +1,17 @@
 {
-  "name": "@agentmem/mcp",
+  "name": "@dinomem/mcp",
   "version": "0.1.1",
-  "description": "MCP server for AgentMem — drop-in memory tools for Claude, Cursor, and any MCP-compatible agent",
+  "description": "MCP server for DinoMem — drop-in memory tools for Claude, Cursor, and any MCP-compatible agent",
   "license": "Apache-2.0",
-  "author": "rooney011 <bvsa2020@gmail.com>",
-  "homepage": "https://agentmem-dashboard.vercel.app",
+  "author": "DinoMem",
+  "homepage": "https://dinomem-dashboard.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rooney011/agentmem-sdk.git",
+    "url": "git+https://github.com/DinoMem/dinomem-sdk.git",
     "directory": "mcp"
   },
   "bugs": {
-    "url": "https://github.com/rooney011/agentmem-sdk/issues"
+    "url": "https://github.com/DinoMem/dinomem-sdk/issues"
   },
   "keywords": [
     "mcp",
@@ -24,7 +24,7 @@
   ],
   "type": "module",
   "bin": {
-    "agentmem-mcp": "dist/index.js"
+    "dinomem-mcp": "dist/index.js"
   },
   "files": [
     "dist",
@@ -37,7 +37,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@agentmem/sdk": "^0.7.0",
+    "@dinomem/sdk": "^0.7.0",
     "@modelcontextprotocol/sdk": "^1.29.0"
   },
   "devDependencies": {

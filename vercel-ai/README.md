@@ -1,9 +1,9 @@
-# @agentmem/vercel-ai-provider
+# @dinomem/vercel-ai-provider
 
-[Vercel AI SDK](https://ai-sdk.dev) integration for [AgentMem](https://agentmem-dashboard.vercel.app). Three ways to wire it in — use one or stack them.
+[Vercel AI SDK](https://ai-sdk.dev) integration for [DinoMem](https://dinomem-dashboard.vercel.app). Three ways to wire it in — use one or stack them.
 
 ```bash
-npm install @agentmem/vercel-ai-provider ai
+npm install @dinomem/vercel-ai-provider ai
 ```
 
 ## Pattern A — middleware (automatic memory injection)
@@ -13,14 +13,14 @@ Wrap any `@ai-sdk/*` model and memories appear in the system prompt on every cal
 ```ts
 import { generateText, wrapLanguageModel } from 'ai'
 import { anthropic } from '@ai-sdk/anthropic'
-import { createAgentMemMiddleware, type LanguageModel } from '@agentmem/vercel-ai-provider'
+import { createDinoMemMiddleware, type LanguageModel } from '@dinomem/vercel-ai-provider'
 
-const cfg = { apiKey: process.env.AGENTMEM_API_KEY!, agentId: 'support-bot' }
+const cfg = { apiKey: process.env.DINOMEM_API_KEY!, agentId: 'support-bot' }
 
 const baseModel: LanguageModel = anthropic('claude-opus-4-7')
 const model = wrapLanguageModel({
   model:      baseModel,
-  middleware: createAgentMemMiddleware(cfg),
+  middleware: createDinoMemMiddleware(cfg),
 })
 
 const { text } = await generateText({ model, prompt: 'What did the customer prefer?' })
@@ -50,13 +50,13 @@ If search fails, the middleware logs to stderr and lets the call proceed without
 ```ts
 import { generateText } from 'ai'
 import { anthropic } from '@ai-sdk/anthropic'
-import { agentmemMemorize, agentmemRecall } from '@agentmem/vercel-ai-provider'
+import { dinomemMemorize, dinomemRecall } from '@dinomem/vercel-ai-provider'
 
 await generateText({
   model:  anthropic('claude-opus-4-7'),
   tools:  {
-    memorize: agentmemMemorize(cfg),
-    recall:   agentmemRecall(cfg),
+    memorize: dinomemMemorize(cfg),
+    recall:   dinomemRecall(cfg),
   },
   prompt: '...',
 })
@@ -73,12 +73,12 @@ import {
   addMemories,
   retrieveMemories,
   searchMemories,
-} from '@agentmem/vercel-ai-provider'
+} from '@dinomem/vercel-ai-provider'
 
 await addMemories('User prefers email.', { apiKey, agentId: 'bot' })
 
 const context = await retrieveMemories(userMessage, { apiKey, agentId: 'bot' })
-// → "Relevant memories retrieved from AgentMem...\n- User prefers email."
+// → "Relevant memories retrieved from DinoMem...\n- User prefers email."
 //   Splice into your system prompt manually.
 
 const hits = await searchMemories('what does the user prefer?', { apiKey, agentId: 'bot' })
@@ -87,15 +87,15 @@ const hits = await searchMemories('what does the user prefer?', { apiKey, agentI
 
 ## Why this beats `@mem0/vercel-ai-provider`
 
-| | Mem0 provider | AgentMem provider |
+| | Mem0 provider | DinoMem provider |
 |---|---|---|
 | Wraps every model SDK | Yes (OpenAI, Anthropic, Cohere, Groq, Google) | No |
 | Works with any `@ai-sdk/*` provider | Only the 5 it wraps | All of them |
-| Runtime dependency count | 8+ | 1 (`@agentmem/sdk`) |
+| Runtime dependency count | 8+ | 1 (`@dinomem/sdk`) |
 | Provides middleware | No | Yes |
 | Helper API compatibility | — | Same names: `addMemories` / `retrieveMemories` / `searchMemories` |
 
-Migration from Mem0: change the import path, set `AGENTMEM_API_KEY` instead of `MEM0_API_KEY`, and pass `agentId` in the config.
+Migration from Mem0: change the import path, set `DINOMEM_API_KEY` instead of `MEM0_API_KEY`, and pass `agentId` in the config.
 
 ## Config reference
 

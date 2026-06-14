@@ -6,10 +6,10 @@ export {
   promptToQuery,
   DEFAULT_PREFIX,
   MemoryStore,
-  AgentMemError,
+  DinoMemError,
 } from './helpers.ts'
-export type { AgentMemConfig, MessageLike, MemoryHit, Scope, Role } from './helpers.ts'
+export type { DinoMemConfig, MessageLike, MemoryHit, Scope, Role } from './helpers.ts'
 
-export { createAgentMemMiddleware } from './middleware.ts'
+export { createDinoMemMiddleware } from './middleware.ts'
 export type { LanguageModel } from './middleware.ts'
-export { agentmemMemorize, agentmemRecall } from './tools.ts'
+export { dinomemMemorize, dinomemRecall } from './tools.ts'
