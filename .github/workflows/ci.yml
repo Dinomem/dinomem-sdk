@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  typescript:
+    name: TS build + typecheck + test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r build
+      - run: pnpm -r typecheck
+      # Runs the test script only in packages that define one
+      # (mastra, claude-agent, vercel-ai); typescript/cli/mcp have none.
+      - run: pnpm -r --if-present test
+
+  python:
+    name: Python (crewai) ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      # crewai depends on the sibling dinomem-py (not yet published), so install
+      # the local core first, then crewai with its dev extras.
+      - run: pip install -e ./python
+      - run: pip install -e './crewai[dev]'
+      - run: pytest crewai
