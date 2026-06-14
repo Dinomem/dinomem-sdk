@@ -1,0 +1,7 @@
+packages:
+  - typescript
+  - cli
+  - mcp
+  - mastra
+  - claude-agent
+  - vercel-ai

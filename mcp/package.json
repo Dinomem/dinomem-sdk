@@ -37,7 +37,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@dinomem/sdk": "^0.7.0",
+    "@dinomem/sdk": "workspace:^",
     "@modelcontextprotocol/sdk": "^1.29.0"
   },
   "devDependencies": {

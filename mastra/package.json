@@ -44,7 +44,7 @@
     "test": "node --test --import=tsx test/*.test.ts"
   },
   "dependencies": {
-    "@dinomem/sdk": "^0.7.0"
+    "@dinomem/sdk": "workspace:^"
   },
   "peerDependencies": {
     "@mastra/core": ">=0.15.3 <0.18.0",
