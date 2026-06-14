@@ -13,4 +13,7 @@ export type {
   Retention, WorkflowUsage,
   BatchWriteResult, BatchSearchResult,
   Scope, Role, ConflictPolicy,
+  VectorClock,
+  CrdtWriteParams, CrdtOp, CrdtWriteResult,
+  CrdtSyncResult, CrdtRegister, CrdtStateResult,
 } from './types.ts'

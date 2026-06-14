@@ -137,6 +137,32 @@ class MemoryStore:
             for c in data.get("conflicts", [])
         ]
 
+    # ── CRDT replica/sync (V3) ────────────────────────────────────────────────
+    # Drivable, black-box interface over DinoMem's property-tested op-based
+    # LWW-Register CvRDT engine. Replicas that learn the same op set converge to
+    # the same register state regardless of the order ops arrive.
+
+    def crdt_write(
+        self,
+        replica_id: str,
+        key: str,
+        value: str,
+        agent_id: str,
+    ) -> Dict[str, Any]:
+        """Issue a register write on replica ``replica_id``. Returns ``{"op": {...}}``."""
+        body: Dict[str, Any] = {"key": key, "value": value, "agentId": agent_id}
+        return self._post(f"/v1/crdt/replicas/{replica_id}/write", body)
+
+    def crdt_sync(self, replica_id: str, from_replica_id: str) -> Dict[str, Any]:
+        """Have ``replica_id`` learn every op ``from_replica_id`` knows. Returns ``{"synced": int}``."""
+        return self._post(f"/v1/crdt/replicas/{replica_id}/sync", {"from": from_replica_id})
+
+    def crdt_state(self, replica_id: str) -> Dict[str, Any]:
+        """Read ``replica_id``'s converged register state. Returns ``{"state": [...]}``."""
+        r = self._http.get(f"{self._base}/v1/crdt/replicas/{replica_id}/state")
+        r.raise_for_status()
+        return r.json()
+
     # ── Scratchpad ────────────────────────────────────────────────────────────
 
     def scratch_set(
@@ -294,6 +320,29 @@ class AsyncMemoryStore:
             )
             for c in data.get("conflicts", [])
         ]
+
+    # ── CRDT replica/sync (V3) ────────────────────────────────────────────────
+
+    async def crdt_write(
+        self,
+        replica_id: str,
+        key: str,
+        value: str,
+        agent_id: str,
+    ) -> Dict[str, Any]:
+        """Issue a register write on replica ``replica_id``. Returns ``{"op": {...}}``."""
+        body: Dict[str, Any] = {"key": key, "value": value, "agentId": agent_id}
+        return await self._post(f"/v1/crdt/replicas/{replica_id}/write", body)
+
+    async def crdt_sync(self, replica_id: str, from_replica_id: str) -> Dict[str, Any]:
+        """Have ``replica_id`` learn every op ``from_replica_id`` knows. Returns ``{"synced": int}``."""
+        return await self._post(f"/v1/crdt/replicas/{replica_id}/sync", {"from": from_replica_id})
+
+    async def crdt_state(self, replica_id: str) -> Dict[str, Any]:
+        """Read ``replica_id``'s converged register state. Returns ``{"state": [...]}``."""
+        r = await self._http.get(f"{self._base}/v1/crdt/replicas/{replica_id}/state")
+        r.raise_for_status()
+        return r.json()
 
     async def scratch_set(
         self,

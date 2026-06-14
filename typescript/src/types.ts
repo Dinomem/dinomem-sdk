@@ -213,3 +213,52 @@ export interface BatchWriteResult {
 export interface BatchSearchResult {
   results: Array<MemoryHit[] | { error: string }>
 }
+
+// ── CRDT replica/sync (V3) ────────────────────────────────────────────────────
+// Drivable, black-box interface over DinoMem's op-based LWW-Register CvRDT
+// engine. Convergence is property-tested (order-independence, the CvRDT laws,
+// no-lost-writes) — see the core's lib/crdt-merge.test.ts.
+
+/** A per-replica vector clock: node id → monotonic counter. */
+export type VectorClock = Record<string, number>
+
+export interface CrdtWriteParams {
+  /** Register key being assigned. */
+  key:     string
+  /** New value for the register. */
+  value:   string
+  /** Agent id issuing the op (recorded on the op). */
+  agentId: string
+}
+
+/** A single op emitted by a replica write. */
+export interface CrdtOp {
+  opId:    string
+  key:     string
+  value:   string
+  agentId: string
+  vclock:  VectorClock
+  ts:      string
+}
+
+export interface CrdtWriteResult {
+  op: CrdtOp
+}
+
+export interface CrdtSyncResult {
+  /** Number of ops the target replica newly learned from the source. */
+  synced: number
+}
+
+/** One converged register entry in a replica's state. */
+export interface CrdtRegister {
+  key:     string
+  value:   string
+  opId:    string
+  agentId: string
+}
+
+export interface CrdtStateResult {
+  /** The replica's converged register state, sorted by key. */
+  state: CrdtRegister[]
+}

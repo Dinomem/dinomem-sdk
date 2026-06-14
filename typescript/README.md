@@ -35,7 +35,23 @@ const hits = await mem.search({
 })
 ```
 
-See [`src/types.ts`](./src/types.ts) for the full type surface (writes, search, conflicts, scratch, API keys, teams, policies, webhooks, retention, usage, batch).
+### CRDT replicas
+
+Drive DinoMem's property-tested op-based LWW-Register CvRDT engine directly. Replicas that learn the same op set converge to the same register state regardless of the order ops arrive:
+
+```ts
+await mem.crdtWrite('replica-a', { key: 'status', value: 'open', agentId: 'planner' })
+await mem.crdtWrite('replica-b', { key: 'status', value: 'closed', agentId: 'executor' })
+
+// replica-a learns every op replica-b knows (and vice versa)
+await mem.crdtSync('replica-a', 'replica-b')
+await mem.crdtSync('replica-b', 'replica-a')
+
+const a = await mem.crdtState('replica-a') // → { state: [{ key, value, opId, agentId }] }
+const b = await mem.crdtState('replica-b') // converges to the same state as `a`
+```
+
+See [`src/types.ts`](./src/types.ts) for the full type surface (writes, search, conflicts, scratch, API keys, teams, policies, webhooks, retention, usage, batch, CRDT replicas).
 
 ## License
 

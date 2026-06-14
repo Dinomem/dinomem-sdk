@@ -5,6 +5,7 @@ import type {
   Team, Policy, SetPolicyParams, Webhook, CreateWebhookParams, Retention,
   WorkflowUsage, BatchWriteResult, BatchSearchResult,
   AccessGrant, CreateGrantParams,
+  CrdtWriteParams, CrdtWriteResult, CrdtSyncResult, CrdtStateResult,
 } from './types.ts'
 
 export const DEFAULT_BASE_URL = 'https://lwbwcuuzoituanwhekyo.supabase.co/functions/v1/api'
@@ -77,6 +78,26 @@ export class MemoryStore {
 
   async batchSearch(searches: SearchParams[]): Promise<BatchSearchResult> {
     return this.req('POST', '/v1/memory/batch/search', { searches })
+  }
+
+  // ── CRDT replica/sync (V3) ──────────────────────────────────────────────────
+  // Drivable, black-box interface over DinoMem's property-tested op-based
+  // LWW-Register CvRDT engine. Replicas that learn the same op set converge to
+  // the same register state regardless of the order ops arrive.
+
+  /** Issue a register write on replica `replicaId`. Returns the emitted op. */
+  async crdtWrite(replicaId: string, params: CrdtWriteParams): Promise<CrdtWriteResult> {
+    return this.req('POST', `/v1/crdt/replicas/${replicaId}/write`, params)
+  }
+
+  /** Have `replicaId` learn every op that `fromReplicaId` knows. Returns the count newly learned. */
+  async crdtSync(replicaId: string, fromReplicaId: string): Promise<CrdtSyncResult> {
+    return this.req('POST', `/v1/crdt/replicas/${replicaId}/sync`, { from: fromReplicaId })
+  }
+
+  /** Read `replicaId`'s converged register state. */
+  async crdtState(replicaId: string): Promise<CrdtStateResult> {
+    return this.req('GET', `/v1/crdt/replicas/${replicaId}/state`)
   }
 
   // ── Scratch ───────────────────────────────────────────────────────────────

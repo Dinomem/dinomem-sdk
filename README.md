@@ -2,7 +2,7 @@
 
 Official client SDKs for [DinoMem](https://dinomem-dashboard.vercel.app) — the memory API for AI agents.
 
-DinoMem is the Postgres-native memory layer for multi-agent systems — it runs entirely inside your Supabase/Postgres (no separate Redis, Neo4j, or Pinecone) and gives concurrent agents typed, auditable conflict resolution.
+DinoMem is the Postgres-native memory layer for multi-agent systems — it runs entirely inside your Supabase/Postgres (no separate Redis, Neo4j, or Pinecone) and gives concurrent agents typed, auditable conflict resolution with property-tested CRDT convergence under concurrent writes.
 
 | Language | Package | Source |
 |---|---|---|
@@ -121,6 +121,8 @@ Drop-in replacements for CrewAI's built-in `RecallMemoryTool` / `RememberTool`, 
 ## Benchmark
 
 Methodology and reproducible harness for comparing DinoMem against Mem0, Zep, Cognee, Supermemory, LangMem, and a pgvector baseline on **multi-agent** memory scenarios (contradictions, CRDT convergence, scope enforcement, temporal queries) lives in a separate repo: [`dinomem-bench`](https://github.com/DinoMem/dinomem-bench). Design phase — implementation in progress.
+
+DinoMem ships CRDT convergence today: an op-based LWW-Register CvRDT engine plus a drivable replica/sync API (`crdtWrite` / `crdtSync` / `crdtState`, over `/v1/crdt`), whose convergence is property-tested and empirically order-independent (order-independence across shuffles, the CvRDT laws, and no-lost-writes vs an independent brute-force reference). DinoMem is the only system under test that exposes a drivable replica/sync API, so it is the only one whose CRDT convergence the benchmark can drive and verify; every other system is structurally N/A on that scenario. The cross-system convergence scenario is engine property-tested and adapter-ready, with the live cross-system run still pending.
 
 ## Quick start
 
