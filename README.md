@@ -1,5 +1,8 @@
 # DinoMem SDK
 
+[![npm](https://img.shields.io/npm/v/%40dinomem%2Fsdk)](https://www.npmjs.com/package/@dinomem/sdk)
+[![PyPI](https://img.shields.io/pypi/v/dinomem-py)](https://pypi.org/project/dinomem-py/)
+
 Official client SDKs for [DinoMem](https://dinomem-dashboard.vercel.app) — the memory API for AI agents.
 
 DinoMem is the Postgres-native memory layer for multi-agent systems — it runs entirely inside your Supabase/Postgres (no separate Redis, Neo4j, or Pinecone) and gives concurrent agents typed, auditable conflict resolution with property-tested CRDT convergence under concurrent writes.
