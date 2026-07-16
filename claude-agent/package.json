@@ -1,6 +1,6 @@
 {
   "name": "@dinomem/claude-agent",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "DinoMem integration for the Claude Agent SDK — in-process MCP server + auto-recall hook",
   "license": "Apache-2.0",
   "author": "DinoMem",

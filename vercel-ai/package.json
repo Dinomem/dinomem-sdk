@@ -1,6 +1,6 @@
 {
   "name": "@dinomem/vercel-ai-provider",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "DinoMem integration for the Vercel AI SDK — middleware, tools, and helpers for any model",
   "license": "Apache-2.0",
   "author": "DinoMem",

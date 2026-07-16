@@ -1,6 +1,6 @@
 {
   "name": "@dinomem/mcp",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "MCP server for DinoMem — drop-in memory tools for Claude, Cursor, and any MCP-compatible agent",
   "license": "Apache-2.0",
   "author": "DinoMem",

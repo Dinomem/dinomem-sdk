@@ -1,6 +1,6 @@
 {
   "name": "@dinomem/sdk",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "description": "TypeScript SDK for DinoMem — the memory API for AI agents",
   "license": "Apache-2.0",
   "author": "DinoMem",
@@ -10,27 +10,43 @@
     "url": "https://github.com/DinoMem/dinomem-sdk.git",
     "directory": "typescript"
   },
-  "bugs": { "url": "https://github.com/DinoMem/dinomem-sdk/issues" },
-  "keywords": ["ai", "agents", "memory", "llm", "rag", "vector", "sdk"],
+  "bugs": {
+    "url": "https://github.com/DinoMem/dinomem-sdk/issues"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "memory",
+    "llm",
+    "rag",
+    "vector",
+    "sdk"
+  ],
   "type": "module",
-  "main":   "./dist/index.cjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "types":  "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types":   "./dist/index.d.ts",
-      "import":  "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "build":     "tsup src/index.ts --format esm,cjs --dts --clean",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "tsup":       "8.3.5",
+    "tsup": "8.3.5",
     "typescript": "5.8.3"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }
