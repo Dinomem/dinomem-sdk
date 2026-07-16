@@ -2,20 +2,23 @@
 
 Runbook for (a) the one-time AgentMem → DinoMem republish and (b) every release after it.
 
-## Current state (verified 2026-07-11)
+## Current state (republish COMPLETE 2026-07-16)
 
-| Registry | Package | Published | Local | Status |
-|---|---|---|---|---|
-| npm | `@agentmem/sdk` | 0.8.0 (2026-05-28) | — | old name, **pre-moat**; deprecate |
-| npm | `@agentmem/mcp` | 0.1.1 | — | deprecate |
-| npm | `@agentmem/cli` | 0.1.1 | — | deprecate |
-| npm | `@agentmem/claude-agent` | 0.1.2 | — | deprecate |
-| npm | `@agentmem/vercel-ai-provider` | 0.2.0 | — | deprecate |
-| npm | `@agentmem/mastra` | 0.1.1 | — | deprecate |
-| npm | `@dinomem/*` (all six) | **nothing** | ready in this repo | **publish — README already points here** |
-| PyPI | `agentmem-py` | 0.2.1 (ours) | `python/` → `dinomem-py` 0.2.1 | tombstone |
-| PyPI | `agentmem-crewai` | 0.1.1 (ours) | `crewai/` → `dinomem-crewai` 0.1.1 | tombstone |
-| PyPI | `agentmem` | 0.3.0 — **NOT ours** (Max Goff) | — | nothing to do |
+The one-time AgentMem → DinoMem republish below was executed on 2026-07-16.
+Parts 1–4 are kept for reference; day-to-day releases use the last section.
+
+| Registry | Package | Published | Status |
+|---|---|---|---|
+| npm | `@dinomem/*` (all six) | **1.0.0** | live; smoke-tested against the live API |
+| npm | `@agentmem/*` (all six) | old versions | **deprecated** with pointer to `@dinomem/*` |
+| PyPI | `dinomem-py` | **1.0.0** | live |
+| PyPI | `dinomem-crewai` | **1.0.0** | live (`dinomem-py>=1.0.0,<2.0`) |
+| PyPI | `agentmem-py` | 0.2.2 | **tombstone** (rename notice + import warning) |
+| PyPI | `agentmem-crewai` | 0.1.2 | **tombstone** |
+| PyPI | `agentmem` | 0.3.0 — **NOT ours** (Max Goff) | nothing to do |
+
+Still manual/optional: yank old `agentmem-*` releases on pypi.org (web UI);
+npm version badge in the README.
 
 Everything published predates the moat: no `checkConflicts`, no bi-temporal
 (`atTime`/`getHistory`), no receipts, no CRDT, no batch/scratch. The local
